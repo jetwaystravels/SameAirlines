@@ -145,10 +145,13 @@
                         }
 
                         toatlinftbasefare = infcount * inftbasefare;
-                        if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("UK") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("AI") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("H1"))
+
+                        if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("SG") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("6E") ||  @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("IX")
+                        )
                         {
-                            basefare = (peradtamount * adtcount) + (perchdtamount * chdcount) + (toatlinftbasefare);
+                            basefare = (peradtamount * adtcount) + (perchdtamount * chdcount) + (toatlinftbasefare / 2);
                         }
+
                         else
                         {
                             basefare = (peradtamount * adtcount) + (perchdtamount * chdcount) + (toatlinftbasefare);
@@ -159,20 +162,91 @@
                         {
                             totaltax = @Model.passeengerlistRT[a].basefaretax + @Model.passeengerlistItanary.infttax;
                         }
+                        else if (@Model.passeengerlistRT[a].journeys[0].Airlinename.ToLower() == "indigo")
+                        {
+                            totaltax = @Model.passeengerlistRT[a].basefaretax;
+                        }
                         else
                         {
                             totaltax = @Model.passeengerlistRT[a].basefaretax + @Model.passeengerlistItanary.basefaretax;
                         }
-                        
 
-                        if (k == 1)
+                        #region Old code
+
+                        // if (k == 1)
+                        // {
+                        //     if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("UK") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("AI") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("H1")
+                        //     || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("TG") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("EY") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("MH")
+                        //     || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("QR") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("CX") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("UL")
+                        //     || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("EK") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("SQ") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("OD")
+                        //     || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("WY")
+                        //     )
+                        //     {
+                        //         basefareR = basefare;
+                        //         peradtamountR = peradtamount;
+                        //         perchdtamountR = perchdtamount;
+                        //         inftbasefareR = inftbasefare;
+                        //         adtamountR = adtamount;
+                        //         chdtamountR = chdtamount;
+                        //         toatlinftbasefareR = toatlinftbasefare;
+                        //         basefaretaxR = basefaretax;
+                        //         totaltaxR = totaltax;
+                        //     }
+                        //     else
+                        //     {
+                        //         basefareR = basefare;
+                        //         peradtamountR = peradtamount;
+                        //         perchdtamountR = perchdtamount;
+                        //         inftbasefareR = inftbasefare;// inftbasefare;
+                        //         adtamountR = adtamount;
+                        //         chdtamountR = chdtamount;
+                        //         toatlinftbasefareR = toatlinftbasefare;
+                        //         basefaretaxR =  basefaretax;
+                        //         totaltaxR = totaltax;
+                        //     }
+                        // }
+                        // else
+                        // {
+                        //     basefareL = basefare;
+                        //     peradtamountL = peradtamount;
+                        //     perchdtamountL = perchdtamount;
+                        //     inftbasefareL = inftbasefare;
+                        //     adtamountL = adtamount;
+                        //     chdtamountL = chdtamount;
+                        //     toatlinftbasefareL = toatlinftbasefare;
+                        //     basefaretaxL = basefaretax;
+                        //     totaltaxL = totaltax;
+                        // }
+                        #endregion
+                        if (k == 0)
                         {
-                            if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("UK") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("AI") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("H1")
-                            || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("TG") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("EY") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("MH")
-                            || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("QR") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("CX") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("UL")
-                            || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("EK") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("SQ") || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("OD")
-                            || Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("WY")
+                            basefareL = basefare;
+                            peradtamountL = peradtamount;
+                            perchdtamountL = perchdtamount;
+                            inftbasefareL = inftbasefare;
+                            adtamountL = adtamount;
+                            chdtamountL = chdtamount;
+                            toatlinftbasefareL = toatlinftbasefare;
+                            basefaretaxL = basefaretax;
+                            totaltaxL = totaltax;
+                        }
+                        else
+                        {
+                            if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("SG") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("6E")
+                            || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("QP") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("IX")
                             )
+                            {
+                                basefareR = basefare;
+                                peradtamountR = peradtamount;
+                                perchdtamountR = perchdtamount;
+                                inftbasefareR = 0;
+                                adtamountR = adtamount;
+                                chdtamountR = chdtamount;
+                                toatlinftbasefareR = 0;
+                                basefaretaxR = 0;
+                                totaltaxR = 0;
+                            }
+                            else
                             {
                                 basefareR = basefare;
                                 peradtamountR = peradtamount;
@@ -184,30 +258,7 @@
                                 basefaretaxR = basefaretax;
                                 totaltaxR = totaltax;
                             }
-                            else
-                            {
-                                basefareR = basefare;
-                                peradtamountR = peradtamount;
-                                perchdtamountR = perchdtamount;
-                                inftbasefareR = inftbasefare;// inftbasefare;
-                                adtamountR = adtamount;
-                                chdtamountR = chdtamount;
-                                toatlinftbasefareR = toatlinftbasefare;
-                                basefaretaxR =  basefaretax;
-                                totaltaxR = totaltax;
-                            }
-                        }
-                        else
-                        {
-                            basefareL = basefare;
-                            peradtamountL = peradtamount;
-                            perchdtamountL = perchdtamount;
-                            inftbasefareL = inftbasefare;
-                            adtamountL = adtamount;
-                            chdtamountL = chdtamount;
-                            toatlinftbasefareL = toatlinftbasefare;
-                            basefaretaxL = basefaretax;
-                            totaltaxL = totaltax;
+
                         }
                     }
 

@@ -573,15 +573,15 @@
                                                             catch (Exception ex)
                                                             {
 
-                                                            }
-                                                            <input type="hidden" class="fareKey" value="@dataGDS" />
-                                                            <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="hidden" class="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
-                                                            <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-                                                        }
+							    }
+							    <input type="hidden" class="fareKey" value="@dataGDS" />
+							    <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
+							}
+							else
+							{
+							    <input type="hidden" class="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
+							    <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
+							}
 
                                                     }
 
@@ -1296,13 +1296,13 @@
                                                             }
                                                             <input type="hidden" class="fareKeyReturn" value="@dataGDS" />
 
-                                                            <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].journeyKey" />
-                                                            <input type="hidden" class="fareKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
-                                                        }
+							    <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
+							}
+							else
+							{
+							    <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].journeyKey" />
+							    <input type="hidden" class="fareKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
+							}
 
                                                     }
 

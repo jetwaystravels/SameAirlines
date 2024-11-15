@@ -2816,7 +2816,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         || data.Airline[k1].ToLower().Contains("qatar") || data.Airline[k1].ToLower().Contains("etihad") 
                         || data.Airline[k1].ToLower().Contains("emirates") || data.Airline[k1].ToLower().Contains("singaporeairline") || data.Airline[k1].ToLower().Contains("malaysia")
                         || data.Airline[k1].ToLower().Contains("thaiairways") || data.Airline[k1].ToLower().Contains("cathaypacific") || data.Airline[k1].ToLower().Contains("srilankan")
-                        || data.Airline[k1].ToLower().Contains("batik")))
+                        || data.Airline[k1].ToLower().Contains("batik") || data.Airline[k1].ToLower().Contains("omanair")))
                     {
                         //flagIndigo = false;
                         #region Indigo Commit

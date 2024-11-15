@@ -2216,14 +2216,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     string tokenview = string.Empty;
                                     if (string.IsNullOrEmpty(tokenview))
                                     {
-                                        if (_a == 0)
-                                        {
+                                        //if (_a == 0)
+                                        //{
                                             tokenview = HttpContext.Session.GetString("AkasaTokan");//spelling 
-                                        }
-                                        else
-                                        {
-                                            tokenview = HttpContext.Session.GetString("AkasaTokanR");//spelling 
-                                        }
+                                        //}
+                                        //else
+                                        //{
+                                        //    tokenview = HttpContext.Session.GetString("AkasaTokanR");//spelling 
+                                        //}
                                         if (tokenview == null) { tokenview = ""; }
                                         token = tokenview.Replace(@"""", string.Empty);
                                         if (token == "" || token == null)
@@ -2244,7 +2244,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             {
                                                 continue;
                                             }
-                                            if (ssrKey[mealid].ToLower().Contains("akasaair") && _a == 0 && (ssrKey[mealid].ToLower().Contains("oneway0") || ssrKey[mealid].ToLower().Contains("oneway1")))
+                                            if (ssrKey[mealid].ToLower().Contains("akasaair") &&  (ssrKey[mealid].ToLower().Contains("oneway0") || ssrKey[mealid].ToLower().Contains("oneway1")))
                                             {
                                                 if (ssrKey[mealid].Length > 1)
                                                 {
@@ -2279,7 +2279,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 }
                                             }
 
-                                            else if (ssrKey[mealid].ToLower().Contains("akasaair") && _a == 1 && (ssrKey[mealid].ToLower().Contains("rt0") || ssrKey[mealid].ToLower().Contains("rt1")))
+                                            else if (ssrKey[mealid].ToLower().Contains("akasaair") && (ssrKey[mealid].ToLower().Contains("rt0") || ssrKey[mealid].ToLower().Contains("rt1")))
                                             {
                                                 if (ssrKey[mealid].Length > 1)
                                                 {
@@ -2312,11 +2312,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     }
                                                 }
                                             }
-                                            else
-                                            {
-                                                mealid++;
-                                                continue;
-                                            }
+                                            //else
+                                            //{
+                                            //    mealid++;
+                                            //    continue;
+                                            //}
                                             mealid++;
                                         }
                                         //continue;
@@ -2335,7 +2335,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             {
                                                 continue;
                                             }
-                                            if (BaggageSSrkey[bagid].ToLower().Contains("akasaair") && _a == 0 && (BaggageSSrkey[bagid].ToLower().Contains("oneway0") || BaggageSSrkey[bagid].ToLower().Contains("oneway1")))
+                                            if (BaggageSSrkey[bagid].ToLower().Contains("akasaair") && _a == 0 && (BaggageSSrkey[bagid].ToLower().Contains("rt0") || BaggageSSrkey[bagid].ToLower().Contains("rt1")))
                                             {
                                                 if (BaggageSSrkey[bagid].Length > 1)
                                                 {

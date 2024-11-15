@@ -144,6 +144,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     flagsession = "H1";
                     airlinename = "srilankan";
                 }
+                else if (fareKey[p].ToLower().Contains("omanair"))
+                {
+                    flagsession = "H1";
+                    airlinename = "omanair";
+                }
 
 
                 airlinenameforcommit.Airline.Add(airlinename);
@@ -160,6 +165,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 string _JourneyKeyOneway = journeyKey[p];
                 string[] _Jparts = _JourneyKeyOneway.Split('@');
                 string _JourneykeyRTData = _Jparts[2];
+                string _fareBasiskeyRTData = _Jparts[2];
                 string _journeySide = _Jparts[1];
                 AirlineNamedesc[p] = _JourneykeyRTData;
                 using (HttpClient client = new HttpClient())
@@ -2243,6 +2249,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         || _JourneykeyRTData.ToLower() == "qatar" || _JourneykeyRTData.ToLower() == "emirates" || _JourneykeyRTData.ToLower() == "thaiairways"
                         || _JourneykeyRTData.ToLower() == "etihad" || _JourneykeyRTData.ToLower() == "singaporeairline" || _JourneykeyRTData.ToLower() == "cathaypacific"
                         || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik"
+                        || _JourneykeyRTData.ToLower() == "omanair"
                         )
                     {
                         var modelJson = TempData["fareKeyModel"] as string;
@@ -2315,8 +2322,31 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             AirfaredataR = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());
                         }
+
+
                         //}
-                        string res = _objAvail.AirPriceGetRT(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, "GDSRT");
+                        // for farebaisis
+                        string farebasisdataL = null;
+                        string farebasisdataR = null;
+                        _data = journeyKey[0].ToString().Split("@0");
+                        if (!string.IsNullOrEmpty(_data[0]))
+                        {
+                            string _farebasisL = _data[0].ToString().Split("_")[1];
+                            farebasisdataL = _farebasisL.Split("^")[0];
+                        }
+
+                        _data = journeyKey[1].ToString().Split("@1");
+                        if (!string.IsNullOrEmpty(_data[0]))
+                        {
+                            string _farebasisR = _data[0].ToString().Split("_")[1];
+                            farebasisdataR = _farebasisR.Split("^")[0]; ;
+                        }
+
+
+
+
+                        string res = _objAvail.AirPriceGetRT_V2(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, farebasisdataL, farebasisdataR, "GDSRT");
+                        //string res = _objAvail.AirPriceGetRT_V1(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, "GDSRT");
                         //string res = _objAvail.AirPriceGetRT(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, Airfaredata, "");
 
                         TravelPortParsing _objP = new TravelPortParsing();
@@ -3504,7 +3534,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     if (_JourneykeyRTData.ToLower() == "vistara" || _JourneykeyRTData.ToLower() == "airindia" || _JourneykeyRTData.ToLower() == "hehnair"
                         || _JourneykeyRTData.ToLower() == "qatar" || _JourneykeyRTData.ToLower() == "emirates" || _JourneykeyRTData.ToLower() == "thaiairways"
                         || _JourneykeyRTData.ToLower() == "etihad" || _JourneykeyRTData.ToLower() == "singaporeairline" || _JourneykeyRTData.ToLower() == "cathaypacific"
-                        || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik")
+                        || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik"
+                        || _JourneykeyRTData.ToLower() == "omanair")
                     {
                         _SeatMapdata = new List<string>();
                         _SeatMapdata.Add("<Start>" + JsonConvert.SerializeObject("") + "<End>");
@@ -4300,7 +4331,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     if (_JourneykeyRTData.ToLower() == "vistara" || _JourneykeyRTData.ToLower() == "airindia" || _JourneykeyRTData.ToLower() == "hehnair"
                         || _JourneykeyRTData.ToLower() == "qatar" || _JourneykeyRTData.ToLower() == "emirates" || _JourneykeyRTData.ToLower() == "thaiairways"
                         || _JourneykeyRTData.ToLower() == "etihad" || _JourneykeyRTData.ToLower() == "singaporeairline" || _JourneykeyRTData.ToLower() == "cathaypacific"
-                        || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik")
+                        || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik"
+                        || _JourneykeyRTData.ToLower() == "omanair")
                     {
                         Mealsdata = new List<string>();
                         Mealsdata.Add("<Start>" + JsonConvert.SerializeObject("") + "<End>");

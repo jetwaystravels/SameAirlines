@@ -12,6 +12,7 @@
         int adtcount = 0;
         int chdcount = 0;
         int infcount = 0;
+        int inftax = 0;
         int finalbasefare = 0;
         int adtamount = 0;
         int adtamountL = 0;
@@ -139,14 +140,16 @@
                     }
 
                     @{
-                        if (@Model.passeengerlistItanary != null)
+                        //if (infcount > 0)
+                        if (@Model.passeengerlistItanary!=null)
                         {
                             inftbasefare = Model.passeengerlistItanary.inftbasefare;
+                            //inftax = Model.passeengerlistItanary.basefaretax;
                         }
 
                         toatlinftbasefare = infcount * inftbasefare;
 
-                        if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("SG") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("6E") ||  @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("IX")
+                        if (@Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("SG") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("6E") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("IX") || @Model.passeengerlistRT[a].journeys[0].segments[0].identifier.carrierCode.Equals("QP")
                         )
                         {
                             basefare = (peradtamount * adtcount) + (perchdtamount * chdcount) + (toatlinftbasefare / 2);
@@ -168,7 +171,16 @@
                         }
                         else
                         {
-                            totaltax = @Model.passeengerlistRT[a].basefaretax + @Model.passeengerlistItanary.basefaretax;
+                            //totaltax = @Model.passeengerlistRT[a].basefaretax + inftax;
+                            if (@Model.passeengerlistItanary!=null)
+                            {
+                                totaltax = @Model.passeengerlistRT[a].basefaretax +  @Model.passeengerlistItanary.basefaretax;
+                            }
+                            else
+                            {
+                                totaltax = @Model.passeengerlistRT[a].basefaretax;
+
+                            }
                         }
 
                         #region Old code

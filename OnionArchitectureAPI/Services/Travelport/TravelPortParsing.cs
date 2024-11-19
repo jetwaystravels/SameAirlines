@@ -1682,7 +1682,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                             if (airPricingSolution.Attributes["TotalPrice"].Value.Contains("INR"))
                                             {
                                                 fare.TotalFareWithOutMarkUp = Convert.ToDecimal(airPricingSolution.Attributes["TotalPrice"].Value.Remove(0, 3));
-                                                if (fare.TotalFareWithOutMarkUp == 16839)
+                                                if (fare.TotalFareWithOutMarkUp == 93277 || fare.TotalFareWithOutMarkUp == 242900)
                                                 {
 
                                                 }
@@ -2153,7 +2153,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                                                                 if (brandText.Name.Equals("air:Title", StringComparison.OrdinalIgnoreCase) && brandText.Attributes["Type"].Value.Equals("External", StringComparison.OrdinalIgnoreCase))
                                                                                                                                 {
                                                                                                                                     _BrandDesc = brandText.InnerText;
-
+                                                                                                                                    break;
                                                                                                                                 }
                                                                                                                                 //if (brandText.Name.Equals("air:Text", StringComparison.OrdinalIgnoreCase) && brandText.Attributes["Type"].Value.Equals("MarketingAgent", StringComparison.OrdinalIgnoreCase))
                                                                                                                                 //{
@@ -2165,6 +2165,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                                                         }
                                                                                                                     }
                                                                                                                 }
+                                                                                                                break;
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -2196,13 +2197,15 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                                                                         if (brandText.Name.Equals("air:Title", StringComparison.OrdinalIgnoreCase) && brandText.Attributes["Type"].Value.Equals("External", StringComparison.OrdinalIgnoreCase))
                                                                                                                                         {
                                                                                                                                             _BrandDesc = brandText.InnerText;
-
+                                                                                                                                            break;
                                                                                                                                         }
                                                                                                                                     }
 
                                                                                                                                 }
+                                                                                                                                break;
                                                                                                                             }
                                                                                                                         }
+                                                                                                                        break;
                                                                                                                     }
                                                                                                                 }
                                                                                                             }

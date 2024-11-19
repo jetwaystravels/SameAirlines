@@ -365,9 +365,12 @@
                                 {
                                     if (item.segments[i].identifier.carrierCode.Equals("UK") || item.segments[i].identifier.carrierCode.Equals("AI"))
                                     {
-                                        aircraftModel = @item.segments[i].legs[j].legInfo.equipmentType.ToString();
-                                        if (!aircraftModel.ToLower().Contains("boeing"))
-                                            aircraftModel = aircraftModel.Replace("B", "Boeing ").Replace("A", "Airbus ");
+                                        if (@item.segments[i].legs[j].legInfo.equipmentType != null)
+                                        {
+                                            aircraftModel = @item.segments[i].legs[j].legInfo.equipmentType.ToString();
+                                            if (!aircraftModel.ToLower().Contains("boeing"))
+                                                aircraftModel = aircraftModel.Replace("B", "Boeing ").Replace("A", "Airbus ");
+                                        }
                                     }
                                     if (j == 1)
                                     {

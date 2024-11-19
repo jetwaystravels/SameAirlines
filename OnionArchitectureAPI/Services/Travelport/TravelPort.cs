@@ -1147,6 +1147,11 @@ namespace OnionArchitectureAPI.Services.Travelport
             string segmentIdDataL = AirfaredataL.SegmentidLeftdata;
             string FarebasisDataL = farebasisdataL;
             string[] segmentIdsL = segmentIdDataL.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] FarebasisL = FarebasisDataL.Split(new char[] { '^' }, StringSplitOptions.RemoveEmptyEntries);
+            string FarebasisDataL0 = string.Empty;
+            string FarebasisDataL1 = string.Empty;
+            string FarebasisDataL2 = string.Empty;
+
             string segmentIdAtIndex0 = string.Empty;
             string segmentIdAtIndex1 = string.Empty;
             string segmentIdAtIndex2 = string.Empty;
@@ -1157,16 +1162,24 @@ namespace OnionArchitectureAPI.Services.Travelport
                 segmentIdAtIndex1 = segmentIdsL[1];
                 segmentIdAtIndex2 = segmentIdsL[2];
 
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+                FarebasisDataL2 = FarebasisL[2];
+
             }
             else if (segmentIdsL.Length == 2)
             {
                 // Accessing elements by index
                 segmentIdAtIndex0 = segmentIdsL[0];
                 segmentIdAtIndex1 = segmentIdsL[1];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
             }
             else
             {
                 segmentIdAtIndex0 = segmentIdsL[0];
+                FarebasisDataL0 = FarebasisL[0];
             }
 
 
@@ -1174,6 +1187,11 @@ namespace OnionArchitectureAPI.Services.Travelport
             string segmentIdDataR = AirfaredataR.SegmentidRightdata;
             string FarebasisDataR = farebasisdataR;
             string[] segmentIdsR = segmentIdDataR.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] FarebasisR = FarebasisDataR.Split(new char[] { '^' }, StringSplitOptions.RemoveEmptyEntries);
+            string FarebasisDataR0 = string.Empty;
+            string FarebasisDataR1 = string.Empty;
+            string FarebasisDataR2 = string.Empty;
+
             string segmentIdAtIndexR0 = string.Empty;
             string segmentIdAtIndexR1 = string.Empty;
             string segmentIdAtIndexR2 = string.Empty;
@@ -1184,16 +1202,25 @@ namespace OnionArchitectureAPI.Services.Travelport
                 segmentIdAtIndexR1 = segmentIdsR[1];
                 segmentIdAtIndexR2 = segmentIdsR[2];
 
+                FarebasisDataR0 = FarebasisR[0];
+                FarebasisDataR1 = FarebasisR[1];
+                FarebasisDataR2 = FarebasisR[2];
+
             }
             else if (segmentIdsR.Length == 2)
             {
                 // Accessing elements by index
                 segmentIdAtIndexR0 = segmentIdsR[0];
                 segmentIdAtIndexR1 = segmentIdsR[1];
+
+                FarebasisDataR0 = FarebasisR[0];
+                FarebasisDataR1 = FarebasisR[1];
             }
             else
             {
                 segmentIdAtIndexR0 = segmentIdsR[0];
+
+                FarebasisDataR0 = FarebasisR[0];
             }
 
             foreach (var segment in AirfaredataL.segments)
@@ -1322,30 +1349,42 @@ namespace OnionArchitectureAPI.Services.Travelport
                 segmentIdAtIndex1 = segmentIdsL[1];
                 segmentIdAtIndex2 = segmentIdsL[2];
 
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+                FarebasisDataL2 = FarebasisL[2];
+
             }
             else if (segmentIdsL.Length == 2)
             {
                 // Accessing elements by index
                 segmentIdAtIndex0 = segmentIdsL[0];
                 segmentIdAtIndex1 = segmentIdsL[1];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
             }
             else
             {
                 segmentIdAtIndex0 = segmentIdsL[0];
+                FarebasisDataL0 = FarebasisL[0];
             }
             foreach (var segment in AirfaredataL.segments)
             {
                 if (legKeyCounter == 0)
                 {
                     segmentIdAtIndex0 = segmentIdAtIndex0;
+
+                    FarebasisDataL = FarebasisDataL0;
                 }
                 else if (legKeyCounter == 1)
                 {
                     segmentIdAtIndex0 = segmentIdAtIndex1;
+                    FarebasisDataL = FarebasisDataL1;
                 }
                 else
                 {
                     segmentIdAtIndex0 = segmentIdAtIndex2;
+                    FarebasisDataL = FarebasisDataL2;
                 }
                 fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\" FareBasisCode=\"" + FarebasisDataL + "\">");
                 //fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\"\">");
@@ -1362,30 +1401,42 @@ namespace OnionArchitectureAPI.Services.Travelport
                 segmentIdAtIndexR1 = segmentIdsR[1];
                 segmentIdAtIndexR2 = segmentIdsR[2];
 
+                FarebasisDataR0 = FarebasisR[0];
+                FarebasisDataR1 = FarebasisR[1];
+                FarebasisDataR2 = FarebasisR[2];
+
             }
             else if (segmentIdsR.Length == 2)
             {
                 // Accessing elements by index
                 segmentIdAtIndexR0 = segmentIdsR[0];
                 segmentIdAtIndexR1 = segmentIdsR[1];
+
+                FarebasisDataR0 = FarebasisR[0];
+                FarebasisDataR1 = FarebasisR[1];
             }
             else
             {
                 segmentIdAtIndexR0 = segmentIdsR[0];
+
+                FarebasisDataR0 = FarebasisR[0];
             }
             foreach (var segment in AirfaredataR.segments)
             {
                 if (legKeyCounterR == 0)
                 {
                     segmentIdAtIndexR0 = segmentIdAtIndexR0;
+                    FarebasisDataR= FarebasisR[0];
                 }
                 else if (legKeyCounterR == 1)
                 {
                     segmentIdAtIndexR0 = segmentIdAtIndexR1;
+                    FarebasisDataR = FarebasisR[1];
                 }
                 else
                 {
                     segmentIdAtIndexR0 = segmentIdAtIndexR2;
+                    FarebasisDataR = FarebasisR[2];
                 }
                 fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndexR0 + "\" FareBasisCode=\"" + FarebasisDataR + "\">");
                 //fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndexR0 + "\"\">");

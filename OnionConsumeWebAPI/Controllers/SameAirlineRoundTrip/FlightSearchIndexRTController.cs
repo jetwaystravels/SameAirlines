@@ -1346,8 +1346,9 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                 Designator Designatorobj = new Designator();
 
                                 Designatorobj.origin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].DepartureStation;
-                                //Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
-                                Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
+                                Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
+                                //spicejet
+                                //Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
                                 string journeykey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey.ToString();
                                 string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
                                 string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
@@ -1369,8 +1370,9 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                 string queryorigin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].DepartureStation;
                                 origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                                 Designatorobj.origin = origin;
-                                //string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
-                                string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
+                                string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
+                                //Spicejet
+                                //string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
                                 destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                                 Designatorobj.destination = destination1;
 
@@ -1764,7 +1766,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     Segmentobj.designator = SegmentDesignatorobj;
                                     Identifier Identifier = new Identifier();
                                     Identifier.identifier = getAvailRes[i].Bonds[k].Legs[l].FlightNumber;
-                                    if (Identifier.identifier == "860")
+                                    if (Identifier.identifier == "191")
                                     {
                                         //var t = SimpleAvailibilityaAddResponcelist[0].segments[0].identifier.identifier.ToString();
                                     }
@@ -1814,8 +1816,8 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                                 string _fareSellkey = "";// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].FareSellKey;
                                                 string fareAvailabilityKey = "";// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].FareSellKey;
                                                 string fareAvailabilityKeyhead = "";// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].FareSellKey;
-                                                var procuctclass = matchingItineraries[j].Bonds[k].Legs[0].Branddesc;// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].ProductClass;
-                                                fareAvailabilityKey = matchingItineraries[j].Bonds[k].Legs[0]._FareBasisCodeforAirpriceHit;
+                                                var procuctclass = matchingItineraries[j].Bonds[k].Legs[l].Branddesc;// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].ProductClass;
+                                                fareAvailabilityKey = matchingItineraries[j].Bonds[k].Legs[l]._FareBasisCodeforAirpriceHit;
                                                 var passengertype = "";
                                                 fareAmount = 0.0M;
                                                 int servicecharge = 0;

@@ -2332,18 +2332,21 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (!string.IsNullOrEmpty(_data[0]))
                         {
                             string _farebasisL = _data[0].ToString().Split("_")[1];
-                            farebasisdataL = _farebasisL.Split("^")[0];
+                            //farebasisdataL = _farebasisL.Split("^")[0];
+                            farebasisdataL = _farebasisL;
                         }
 
                         _data = journeyKey[1].ToString().Split("@1");
                         if (!string.IsNullOrEmpty(_data[0]))
                         {
                             string _farebasisR = _data[0].ToString().Split("_")[1];
-                            farebasisdataR = _farebasisR.Split("^")[0]; ;
+                            //farebasisdataR = _farebasisR.Split("^")[0];
+                            farebasisdataR = _farebasisR;
                         }
 
 
-
+                        //farebasisdataL = AirfaredataL.FareBasisLeftdata;//  "UU1YXSII@UU1YXTII"
+                        //farebasisdataR = AirfaredataR.FareBasisRightdata;
 
                         string res = _objAvail.AirPriceGetRT_V2(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, farebasisdataL, farebasisdataR, "GDSRT");
                         //string res = _objAvail.AirPriceGetRT_V1(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, "GDSRT");

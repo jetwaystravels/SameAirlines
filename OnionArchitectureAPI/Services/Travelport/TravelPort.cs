@@ -205,6 +205,27 @@ namespace OnionArchitectureAPI.Services.Travelport
             sbReq.Append("<PreferredProviders>");
             sbReq.Append("<Provider xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"1G\" />");
             sbReq.Append("</PreferredProviders>");
+            
+            // Start for prohibited carrier
+            sbReq.Append("<ProhibitedCarriers>");
+            sbReq.Append("<Carrier Code='H1' xmlns=\"http://www.travelport.com/schema/common_v52_0\"/>");
+            sbReq.Append("</ProhibitedCarriers>");
+            //End  for prohibited carrier
+
+            // Business class
+            if (flightclass == "B")
+            {
+                sbReq.Append("<PermittedCabins>");
+                sbReq.Append("<CabinClass Type=\"PremiumEconomy\" xmlns=\"http://www.travelport.com/schema/common_v52_0\"/>");
+                sbReq.Append("</PermittedCabins>");
+            }
+
+            //Permitted Carrier
+            //sbReq.Append("<air:PermittedCarriers xmlns=\"http://www.travelport.com/schema/common_v52_0\">");
+            //sbReq.Append("<Carrier Code='9W' xmlns=\"http://www.travelport.com/schema/common_v52_0\"/>");
+            //sbReq.Append("<Carrier Code='AI' xmlns=\"http://www.travelport.com/schema/common_v52_0\"/>");
+            //sbReq.Append("<Carrier Code='UK' xmlns=\"http://www.travelport.com/schema/common_v52_0\"/>");
+            //sbReq.Append("</air:PermittedCarriers>");
 
             sbReq.Append("</AirSearchModifiers>");
             int pax = 0;
@@ -215,7 +236,10 @@ namespace OnionArchitectureAPI.Services.Travelport
                     for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
                     {
                         pax++;
-                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" />");
+                        //sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" />"); //According to demo
+                        
+                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" BookingTravelerRef=\"" + pax + "\" />");
+
                     }
                 }
 
@@ -224,7 +248,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                     for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
                     {
                         pax++;
-                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  Age=\"01\"/>");
+                        //sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  Age=\"01\"/>");//According to demo
+                        
+                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"01\"/>");
                     }
                 }
 
@@ -233,7 +259,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                     for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
                     {
                         pax++;
-                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\"  Age=\"10\"/>");
+                        //sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\"  Age=\"10\"/>");//According to demo
+                        
+                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + pax + "\" Age=\"10\"/>");
                     }
                 }
             }
@@ -244,7 +272,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                     for (int i = 0; i < _GetfligthModel.adultcount; i++)
                     {
                         pax++;
-                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\"  />");
+                        //sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\"  />");//According to demo
+                        
+                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" BookingTravelerRef=\"" + pax + "\" />");
                     }
                 }
                 if (_GetfligthModel.infantcount != 0)
@@ -252,7 +282,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                     for (int i = 0; i < _GetfligthModel.infantcount; i++)
                     {
                         pax++;
-                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" Age=\"01\"/>");
+                        //sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" Age=\"01\"/>");//According to demo
+                        
+                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"01\"/>");
                     }
                 }
                 if (_GetfligthModel.childcount != 0)
@@ -260,17 +292,24 @@ namespace OnionArchitectureAPI.Services.Travelport
                     for (int i = 0; i < _GetfligthModel.childcount; i++)
                     {
                         pax++;
-                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\"  Age=\"10\"/>");
+                        //sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\"  Age=\"10\"/>");//According to demo
+                        
+                        sbReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + pax + "\" Age=\"10\"/>");
                     }
                 }
 
 
 
             }
-            sbReq.Append("<AirPricingModifiers>");
+            //sbReq.Append("<AirPricingModifiers>");//According to demo
+            sbReq.Append("<AirPricingModifiers FaresIndicator=\"AllFares\" ETicketability=\"Required\">");
             sbReq.Append("<AccountCodes>");
             sbReq.Append("<AccountCode xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"-\" />");
             sbReq.Append("</AccountCodes>");
+            
+            // This below line code is for code guideline
+            sbReq.Append("<FlightType TripleInterlineCon=\"false\" DoubleInterlineCon=\"false\" SingleInterlineCon=\"true\" TripleOnlineCon=\"false\" DoubleOnlineCon=\"false\" SingleOnlineCon=\"true\" StopDirects=\"true\" NonStopDirects=\"true\" />");
+            
             sbReq.Append("</AirPricingModifiers>");
             sbReq.Append("</LowFareSearchReq></soap:Body></soap:Envelope>");
 
@@ -1137,7 +1176,8 @@ namespace OnionArchitectureAPI.Services.Travelport
             fareRepriceReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
             fareRepriceReq.Append("<soap:Body>");
 
-            fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\"  AuthorizedBy = \"Travelport\" TargetBranch=\"" + _targetBranch + "\">");
+            //fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\"  AuthorizedBy = \"Travelport\" TargetBranch=\"" + _targetBranch + "\">");//According to demo
+            fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" FareRuleType=\"long\" AuthorizedBy = \"Travelport\" CheckOBFees=\"All\" TargetBranch=\"" + _targetBranch + "\">");
             fareRepriceReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
             fareRepriceReq.Append("<AirItinerary>");
             //< AirSegment Key = "nX2BdBWDuDKAf9mT8SBAAA==" AvailabilitySource = "P" Equipment = "32A" AvailabilityDisplayType = "Fare Shop/Optimal Shop" Group = "0" Carrier = "AI" FlightNumber = "860" Origin = "DEL" Destination = "BOM" DepartureTime = "2024-07-25T02:15:00.000+05:30" ArrivalTime = "2024-07-25T04:30:00.000+05:30" FlightTime = "135" Distance = "708" ProviderCode = "1G" ClassOfService = "T" />
@@ -1274,7 +1314,8 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
 
             fareRepriceReq.Append("</AirItinerary>");
-            fareRepriceReq.Append("<AirPricingModifiers  InventoryRequestType=\"DirectAccess\">");
+            //fareRepriceReq.Append("<AirPricingModifiers  InventoryRequestType=\"DirectAccess\">");//According to demo
+            fareRepriceReq.Append("<AirPricingModifiers ETicketability=\"Yes\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
             fareRepriceReq.Append("<BrandModifiers>");
             fareRepriceReq.Append("<FareFamilyDisplay ModifierType=\"FareFamily\"/>");
             fareRepriceReq.Append("</BrandModifiers>");
@@ -1669,7 +1710,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             //    {
             //        segmentIdAtIndex0 = segmentIdAtIndex2;
             //    }
-            //    fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\" FareBasisCode=\""+ FarebasisDataL + "\">");
+            //    fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\" FareBasisCode=\"" + FarebasisDataL + "\">");
             //    //fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\"\">");
             //    fareRepriceReq.Append("<PermittedBookingCodes>");
             //    fareRepriceReq.Append("<BookingCode Code = \"" + segment.designator._ClassOfService + "\"/>");
@@ -1933,6 +1974,185 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             return res;
         }
+        public string CreatePNR_latest(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, string? _pricesolution = null)
+        {
+
+            int count = 0;
+            int icount = 100;
+            //int paxCount = 0;
+            //int legcount = 0;
+            //string origin = string.Empty;
+            //int legKeyCounter = 0;
+
+            createPNRReq = new StringBuilder();
+            createPNRReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            createPNRReq.Append("<soap:Body>");
+            createPNRReq.Append("<AirCreateReservationReq xmlns=\"http://www.travelport.com/schema/universal_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy = \"Travelport\" TargetBranch=\"" + _targetBranch + "\" ProviderCode=\"1G\" RetainReservation=\"Both\">");
+            createPNRReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
+            List<passkeytype> passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(AdultTraveller, typeof(List<passkeytype>));
+
+
+
+            AirAsiaTripResponceModel Getdetails = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(_data, typeof(AirAsiaTripResponceModel));
+            Getdetails.PriceSolution = _pricesolution.Replace("\\", "");
+
+            if (passengerdetails.Count > 0)
+            {
+                for (int i = 0; i < passengerdetails.Count; i++)
+                {
+                    if (passengerdetails[i].passengertypecode == "ADT")
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\" Age=\"40\" DOB=\"1984-07-25\">");
+                    }
+                    else if (passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"CNN\" Age=\"10\" DOB=\"2014-07-25\" >");
+                    }
+                    else if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\" TravelerType=\"INF\" Age=\"1\" DOB=\"2023-08-25\" >");
+                    }
+                    else
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\" Age=\"40\" DOB=\"1984-07-25\">");
+                    }
+                    //Title
+                    if (passengerdetails[i].passengertypecode == "ADT")
+                    {
+                        passengerdetails[i].title = "MR";
+                    }
+                    else
+                    {
+                        passengerdetails[i].title = "MSTR";
+                    }
+                    if (!string.IsNullOrEmpty(passengerdetails[i].middle))
+                    {
+                        createPNRReq.Append("<BookingTravelerName  First=\"" + passengerdetails[i].first.ToUpper() + "\" Last=\"" + passengerdetails[i].last.ToUpper() + "\" Middle=\"" + passengerdetails[i].middle.ToUpper() + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\" />");
+                    }
+                    else
+                    {
+                        createPNRReq.Append("<BookingTravelerName  First=\"" + passengerdetails[i].first.ToUpper() + "\" Last=\"" + passengerdetails[i].last.ToUpper() + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\" />");
+                    }
+                    if (passengerdetails[i].passengertypecode == "ADT" || passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
+                    {
+                        createPNRReq.Append("<PhoneNumber Number=\"" + passengerdetails[i].mobile + "\"  />");
+                        createPNRReq.Append("<Email EmailID=\"" + passengerdetails[i].Email + "\" />");
+                    }
+                    else
+                    {
+                        createPNRReq.Append("<PhoneNumber Number=\"" + passengerdetails[0].mobile + "\"  />");
+                        createPNRReq.Append("<Email EmailID=\"" + passengerdetails[0].Email + "\" />");
+                    }
+
+                    //if (!String.IsNullOrEmpty(paxDetail.FrequentFlierNumber) && paxDetail.FrequentFlierNumber.Length > 5)
+                    //{
+                    //if (segment_.Bonds[0].Legs[0].AirlineName.Equals("UK"))
+                    //{
+                    //createPNRReq.Append("<SSR  Key='" + count + "' Type='FQTV' Status='HK' Carrier='UK' FreeText='" + paxDetail.FrequentFlierNumber + "-" + paxDetail.LastName + "/" + paxDetail.FirstName + "" + paxDetail.Title.ToUpper() + "'/>");
+                    //}
+                    //else
+                    //{
+                    //  createPNRReq.Append("<com:LoyaltyCard SupplierCode='" + segment_.Bonds[0].Legs[0].AirlineName + "' CardNumber='" + paxDetail.FrequentFlierNumber + "'/>");
+                    //}
+                    //}
+                    //if (!IsDomestic)
+                    //{
+                    //    if (IsSSR)
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //    else if (ISSSR(segment_.Bonds))
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //}
+                    createPNRReq.Append("<SSR  Key=\"" + count + "\" Type=\"DOCS\"  FreeText=\"P/GB/S12345678/GB/20JUL76/M/01JAN16/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                    string contractNo = string.Empty;
+                    if (string.IsNullOrEmpty(contractNo))
+                    {
+                        contractNo = "CTCM " + passengerdetails[i].mobile + " PAX";
+                    }
+
+
+                    if (i == 0 && passengerdetails[i].passengertypecode == "ADT")
+                    {
+                        icount++;
+                        createPNRReq.Append("<SSR  Key=\"" + icount + "\" Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        icount++;
+                        createPNRReq.Append("<SSR  Key=\"" + icount + "\" Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+
+                        //Domestic
+                        //createPNRReq.Append("<Address>");
+                        //createPNRReq.Append("<AddressName>Home</AddressName>");
+                        //createPNRReq.Append("<Street>20th I Cross</Street>");
+                        //createPNRReq.Append("<City>Bangalore</City>");
+                        //createPNRReq.Append("<State>KA</State>");
+                        //createPNRReq.Append("<PostalCode>560047</PostalCode>");
+                        //createPNRReq.Append("<Country>IN</Country>");
+                        //createPNRReq.Append("</Address>");
+                        //International
+                        createPNRReq.Append("<Address>");
+                        createPNRReq.Append("<AddressName>DemoSiteAddress</AddressName>");
+                        createPNRReq.Append("<Street>Via Augusta 59 5</Street>");
+                        createPNRReq.Append("<City>Madrid</City>");
+                        createPNRReq.Append("<State>IA</State>");
+                        createPNRReq.Append("<PostalCode>50156</PostalCode>");
+                        createPNRReq.Append("<Country>US</Country>");
+                        createPNRReq.Append("</Address>");
+
+                    }
+
+                    if (passengerdetails[i].passengertypecode == "CNN")
+                    {
+                        createPNRReq.Append("<NameRemark>");
+                        createPNRReq.Append("<RemarkData>P-C04</RemarkData>");
+                        createPNRReq.Append("</NameRemark>");
+                    }
+                    string format = Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
+                    if (passengerdetails[i].passengertypecode == "INF")
+                    {
+                        createPNRReq.Append("<NameRemark>");
+                        createPNRReq.Append("<RemarkData>" + format + "</RemarkData>");
+                        createPNRReq.Append("</NameRemark>");
+                    }
+                    //if (!IsDomestic)
+                    //{
+                    //    if (IsSSR)
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //    else if (ISSSR(segment_.Bonds))
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //}
+                    createPNRReq.Append("</BookingTraveler>");
+                    count++;
+                }
+                createPNRReq.Append("<ContinuityCheckOverride xmlns=\"http://www.travelport.com/schema/common_v52_0\">true</ContinuityCheckOverride>");
+                createPNRReq.Append("<AgencyContactInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\">");
+                createPNRReq.Append("<PhoneNumber CountryCode=\"91\" AreaCode=\"011\" Number=\"46615790\" Location=\"DEL\" Type=\"Agency\"/>");
+                createPNRReq.Append("</AgencyContactInfo>");
+                createPNRReq.Append("<FormOfPayment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"Cash\" Key=\"1\" />");
+                createPNRReq.Append(Getdetails.PriceSolution);
+                createPNRReq.Append("<ActionStatus xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"ACTIVE\" TicketDate=\"T*\" ProviderCode=\"1G\" />");
+                createPNRReq.Append("<Payment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"2\" Type=\"Itinerary\" FormOfPaymentRef=\"1\" Amount=\"INR" + _Total + "\" />");
+                createPNRReq.Append("</AirCreateReservationReq></soap:Body></soap:Envelope>");
+            }
+            //}
+            string res = Methodshit.HttpPost(_testURL, createPNRReq.ToString(), _userName, _password);
+            //SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
+            //SetSessionValue("GDSPassengerModel", JsonConvert.SerializeObject(_GetfligthModel));
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + createPNRReq + "\n\n Response: " + res, "GetPNR", "GDSOneWay");
+            }
+            else
+            {
+                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(createPNRReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetPNR", "SameGDSRT");
+            }
+            return res;
+        }
         public string CreatePNR(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, string? _pricesolution = null)
         {
 
@@ -2112,6 +2332,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             return res;
         }
+
         public string CreatePNR_V2(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, string? _pricesolution = null)
         {
 

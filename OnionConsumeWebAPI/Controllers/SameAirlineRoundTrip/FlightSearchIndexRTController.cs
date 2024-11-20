@@ -177,7 +177,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         AirasiaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
                         //token = ((Newtonsoft.Json.Linq.JValue)value).Value.ToString();
                     }
-                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "Logon", "AirAsiaOneWay");
+                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "Logon", "SameAirlineAirAsiaRT");
 
 
                     HttpContext.Session.SetString("AirasiaTokan", JsonConvert.SerializeObject(AirasiaTokan.token));
@@ -325,7 +325,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     {
                         var results = responce1.Content.ReadAsStringAsync().Result;
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + results, "GetAvailability", "AirAsiaOneWay");
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + results, "GetAvailability", "SameAirlineAirAsiaRT");
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         dynamic jsonObj = JObject.Parse(results);
 
@@ -684,7 +684,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         {
 
                             var resultsAkasaAir = responceAkasaAir.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + resultsAkasaAir, "GetAvailability", "AkasaOneWay");
+                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + resultsAkasaAir, "GetAvailability", "SameAirlineAkasaRT");
                             var JsonAkasaAir = JsonConvert.DeserializeObject<dynamic>(resultsAkasaAir);
                             dynamic jsonAkasaAir = JObject.Parse(resultsAkasaAir);
 
@@ -1044,7 +1044,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
 
                         _getAvailabilityVer2Response = await objSpiceJet.GetAvailabilityVer2Async(_getAvailabilityRQ);
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getAvailabilityRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getAvailabilityVer2Response), "GetAvailability", "SpicejetOneWay");
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getAvailabilityRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getAvailabilityVer2Response), "GetAvailability", "SameSpicejetRT");
                     }
                     int count1 = 0;
                     if (_getAvailabilityVer2Response != null)
@@ -1330,7 +1330,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     int count2 = 0;
                     if (_IndigologonResponseobj != null)
                     {
-                        _IndigoAvailabilityResponseobj = await objgetAvail_.GetTripAvailability(_GetfligthModel, _IndigologonResponseobj, TotalCount, adultcount, childcount, infantcount, flightclass, "IndigoRT");
+                        _IndigoAvailabilityResponseobj = await objgetAvail_.GetTripAvailability(_GetfligthModel, _IndigologonResponseobj, TotalCount, adultcount, childcount, infantcount, flightclass, "SameIndigoRT");
                         count2 = 0;
                         if (_IndigoAvailabilityResponseobj != null && _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0].Length > 0)
                         {

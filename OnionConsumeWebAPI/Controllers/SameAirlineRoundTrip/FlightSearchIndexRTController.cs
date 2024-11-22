@@ -2114,8 +2114,8 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                                 string _fareSellkey = "";// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].FareSellKey;
                                                 string fareAvailabilityKey = "";// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].FareSellKey;
                                                 string fareAvailabilityKeyhead = "";// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].FareSellKey;
-                                                var procuctclass = matchingItineraries[j].Bonds[k].Legs[0].Branddesc;// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].ProductClass;
-                                                fareAvailabilityKey= matchingItineraries[j].Bonds[k].Legs[0]._FareBasisCodeforAirpriceHit;
+                                                var procuctclass = matchingItineraries[j].Bonds[k].Legs[l].Branddesc;// _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Fares[j].ProductClass;
+                                                fareAvailabilityKey= matchingItineraries[j].Bonds[k].Legs[l]._FareBasisCodeforAirpriceHit;
                                                 var passengertype = "";
                                                 fareAmount = 0.0M;
                                                 int servicecharge = 0;

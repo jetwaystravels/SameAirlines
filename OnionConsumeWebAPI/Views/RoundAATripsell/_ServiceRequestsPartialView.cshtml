@@ -1579,17 +1579,17 @@
 
                                                         if (AirLine.ToLower() == "akasaair")
                                                         {
-                                                            if (Model.MealslistRT.Count > 1)
-                                                            {
-                                                                for (int s = 0; s < Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr.Count; s++)
+                                                            //if (Model.MealslistRT.Count > 1)
+                                                            //{
+                                                                for (int s = 0; s < Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr.Count; s++)
                                                                 {
 
-                                                                    string priceBaggage = Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
-                                                                    string Sssrcode = Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].ssrCode;
+                                                                    string priceBaggage = Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].passengersAvailabilityBaggage[0].price;
+                                                                    string Sssrcode = Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].ssrCode;
                                                                     string bagcode = Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                    var bagname = Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].name + "@" + Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
-                                                                    bagkeyAA = Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pas].ssrKey + "_" + Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price + "_" + Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].Airline;
-                                                                    string passengerKey = Model.MealslistRT[1].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pas].passengerKey;
+                                                                    var bagname = Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].name + "@" + Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].passengersAvailabilityBaggage[0].price;
+                                                                    bagkeyAA = Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].passengersAvailabilityBaggage[pas].ssrKey + "_" + Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].passengersAvailabilityBaggage[0].price + "_" + Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].passengersAvailabilityBaggage[0].Airline;
+                                                                    string passengerKey = Model.MealslistRT[0].journeySsrsBaggage[1].baggageSsr[s].passengersAvailabilityBaggage[pas].passengerKey;
                                                                     if (bagcode != "False")
                                                                     {
                                                                         if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
@@ -1608,7 +1608,7 @@
 
                                                                 }
 
-                                                            }
+                                                            //}
 
                                                         }
                                                         else

@@ -2929,7 +2929,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         if (unitKey[k].ToLower().Contains("spicejet") || unitKey[k].ToLower().Contains("airasia"))
                                             continue;
 
-                                        if (unitKey[k].Contains("_OneWay0") && p == 0)
+                                        if (unitKey[k].Contains("_OneWay0"))
                                         {
                                             unitsubKey2 = unitKey[k].Split('_');
                                             pas_unitKey = unitsubKey2[1].Trim();
@@ -2937,7 +2937,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             _obj0.key = pas_unitKey;
                                             _obj.SSRcodeOneWayI.Add(_obj0);
                                         }
-                                        else if (unitKey[k].Contains("_OneWay1") && p == 0)
+                                        else if (unitKey[k].Contains("_OneWay1"))
                                         {
                                             unitsubKey2 = unitKey[k].Split('_');
                                             pas_unitKey = unitsubKey2[1].Trim();
@@ -2945,7 +2945,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             _obj1.key = pas_unitKey;
                                             _obj.SSRcodeOneWayII.Add(_obj1);
                                         }
-                                        else if (unitKey[k].Contains("_RT0") && p == 1)
+                                        else if (unitKey[k].Contains("_RT0"))
                                         {
                                             unitsubKey2 = unitKey[k].Split('_');
                                             pas_unitKey = unitsubKey2[1].Trim();
@@ -2953,7 +2953,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             _obj2.key = pas_unitKey;
                                             _obj.SSRcodeRTI.Add(_obj2);
                                         }
-                                        else if (unitKey[k].Contains("_RT1") && p == 1)
+                                        else if (unitKey[k].Contains("_RT1"))
                                         {
                                             unitsubKey2 = unitKey[k].Split('_');
                                             pas_unitKey = unitsubKey2[1].Trim();
@@ -2969,7 +2969,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                     for (int i = 0; i < journeyscount; i++)
                                     {
-                                        int segmentscount = passeengerKeyList.journeys[i].segments.Count;
+                                        int segmentscount = passeengerKeyList.journeys[0].segments.Count;
 
                                         for (int l2 = 0; l2 < _obj.SSRcodeOneWayI.Count; l2++)
                                         {
@@ -2980,7 +2980,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             pas_unitKey = _obj.SSRcodeOneWayI[l2].key.Trim();
                                             using (HttpClient client = new HttpClient())
                                             {
-                                                string journeyKey = passeengerKeyList.journeys[i].journeyKey;
+                                                string journeyKey = passeengerKeyList.journeys[0].journeyKey;
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 _SeatAssignmentModel.collectedCurrencyCode = "INR";
@@ -3007,7 +3007,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             pas_unitKey = _obj.SSRcodeOneWayII[l2].key.Trim();
                                             using (HttpClient client = new HttpClient())
                                             {
-                                                string journeyKey = passeengerKeyList.journeys[i].journeyKey;
+                                                string journeyKey = passeengerKeyList.journeys[0].journeyKey;
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
@@ -3033,7 +3033,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             pas_unitKey = _obj.SSRcodeRTI[l2].key.Trim();
                                             using (HttpClient client = new HttpClient())
                                             {
-                                                string journeyKey = passeengerKeyList.journeys[i].journeyKey;
+                                                string journeyKey = passeengerKeyList.journeys[1].journeyKey;
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
@@ -3058,7 +3058,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             pas_unitKey = _obj.SSRcodeRTII[l2].key.Trim();
                                             using (HttpClient client = new HttpClient())
                                             {
-                                                string journeyKey = passeengerKeyList.journeys[i].journeyKey;
+                                                string journeyKey = passeengerKeyList.journeys[1].journeyKey;
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);

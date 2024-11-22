@@ -1396,7 +1396,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     }
                                                 }
                                                 AirAsiaTripResponceobject.inftcount = Inftcount;
-                                                AirAsiaTripResponceobject.inftbasefare = Inftbasefare;
+                                                AirAsiaTripResponceobject.inftbasefare = Inftbasefare/ Inftcount;
                                                 AirAsiaTripResponceobject.basefaretax = inftax;
                                                 AirAsiaTripResponceobject.journeys = AAJourneyList;
                                                 AirAsiaTripResponceobject.passengers = passkeyList;

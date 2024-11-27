@@ -1338,43 +1338,48 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         }
                         for (int a = 0; a < _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules.Length; a++)
                         {
-                            for (int i = 0; i < _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys.Length; i++)
+                            if (_IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a].Length > 0)
                             {
-                                string _journeysellkey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey;
-                                _SimpleAvailibilityaAddResponceobj = new SimpleAvailibilityaAddResponce();
-                                string journeyKey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey;
-                                Designator Designatorobj = new Designator();
+                                for (int i = 0; i < _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys.Length; i++)
+                                {
+                                    string _journeysellkey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey;
+                                    _SimpleAvailibilityaAddResponceobj = new SimpleAvailibilityaAddResponce();
+                                    string journeyKey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey;
+                                    Designator Designatorobj = new Designator();
 
-                                Designatorobj.origin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].DepartureStation;
-                                Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
-                                //spicejet
-                                //Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
-                                string journeykey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey.ToString();
-                                string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
-                                string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
-                                Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(departureTime);
-                                Designatorobj.arrival = DateTime.ParseExact(arrivalTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(arrivalTime);
-                                Designatorobj.Arrival = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
-                                DateTime IarrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
-                                Designatorobj.ArrivalDate = IarrivalDateTime.ToString("yyyy-MM-dd");
-                                Designatorobj.ArrivalTime = IarrivalDateTime.ToString("HH:mm:ss");
-                                TimeSpan TimeDifference = Designatorobj.arrival - Designatorobj.departure;
-                                TimeSpan timeSpan = TimeSpan.Parse(TimeDifference.ToString());
-                                if ((int)timeSpan.Minutes == 0)
-                                    formatTime = $"{(int)timeSpan.TotalHours} h";
-                                else
-                                    formatTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
-                                Designatorobj.formatTime = timeSpan;
-                                //vivek
-                                //Designatorobj.SetformatTime = formatTime;
-                                string queryorigin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].DepartureStation;
-                                origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
-                                Designatorobj.origin = origin;
-                                string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
-                                //Spicejet
-                                //string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
-                                destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
-                                Designatorobj.destination = destination1;
+                                    Designatorobj.origin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].DepartureStation;
+                                    Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
+                                    if (string.IsNullOrEmpty(Designatorobj.origin) || string.IsNullOrEmpty(Designatorobj.destination))
+                                        continue;
+
+                                    //spicejet
+                                    //Designatorobj.destination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
+                                    string journeykey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].JourneySellKey.ToString();
+                                    string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
+                                    string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
+                                    Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(departureTime);
+                                    Designatorobj.arrival = DateTime.ParseExact(arrivalTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(arrivalTime);
+                                    Designatorobj.Arrival = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
+                                    DateTime IarrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                    Designatorobj.ArrivalDate = IarrivalDateTime.ToString("yyyy-MM-dd");
+                                    Designatorobj.ArrivalTime = IarrivalDateTime.ToString("HH:mm:ss");
+                                    TimeSpan TimeDifference = Designatorobj.arrival - Designatorobj.departure;
+                                    TimeSpan timeSpan = TimeSpan.Parse(TimeDifference.ToString());
+                                    if ((int)timeSpan.Minutes == 0)
+                                        formatTime = $"{(int)timeSpan.TotalHours} h";
+                                    else
+                                        formatTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
+                                    Designatorobj.formatTime = timeSpan;
+                                    //vivek
+                                    //Designatorobj.SetformatTime = formatTime;
+                                    string queryorigin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].DepartureStation;
+                                    origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
+                                    Designatorobj.origin = origin;
+                                    string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].ArrivalStation;
+                                    //Spicejet
+                                    //string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[0].AvailableSegment[0].ArrivalStation;
+                                    destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
+                                    Designatorobj.destination = destination1;
 
                                 var segmentscount = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[a][0].AvailableJourneys[i].AvailableSegment.Length;
                                 List<DomainLayer.Model.Segment> Segmentobjlist = new List<DomainLayer.Model.Segment>();
@@ -1576,14 +1581,15 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                 if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0)
                                     continue;
 
-                                //SpiceJetAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
-                                if (a == 0)
-                                {
-                                    SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
-                                }
-                                else
-                                {
-                                    SimpleAvailibilityaAddResponcelistR.Add(_SimpleAvailibilityaAddResponceobj);
+                                    //SpiceJetAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
+                                    if (a == 0)
+                                    {
+                                        SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
+                                    }
+                                    else
+                                    {
+                                        SimpleAvailibilityaAddResponcelistR.Add(_SimpleAvailibilityaAddResponceobj);
+                                    }
                                 }
                             }
                         }

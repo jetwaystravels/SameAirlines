@@ -123,17 +123,18 @@ namespace OnionArchitectureAPI.Services.Indigo
                     _getapi _obj = new _getapi();
                     _res = await _obj.GetMealAvailabilityForBooking(_req);
                     SSRGroup.Add(_res);
+                    string Str2 = JsonConvert.SerializeObject(SSRGroup);
+                    if (_AirlineWay.ToLower() == "oneway")
+                    {
+                        logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_req) + "\n\n Response: " + JsonConvert.SerializeObject(_res), "GetSSRAvailabilityForBooking", "IndigoOneWay");
+                    }
+                    else
+                    {
+                        logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_req) + "\n\n Response: " + JsonConvert.SerializeObject(_res), "GetSSRAvailabilityForBooking", "SameIndigoRT");
+                    }
                 }
 
-                string Str2 = JsonConvert.SerializeObject(SSRGroup);
-                if (_AirlineWay.ToLower() == "oneway")
-                {
-                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_req) + "\n\n Response: " + JsonConvert.SerializeObject(_res), "GetSSRAvailabilityForBooking", "IndigoOneWay");
-                }
-                else
-                {
-                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_req) + "\n\n Response: " + JsonConvert.SerializeObject(_res), "GetSSRAvailabilityForBooking", "SameIndigoRT");
-                }
+                
                 return SSRGroup;
 
             }

@@ -64,6 +64,9 @@ namespace Indigo
             catch (Exception ex)
             {
                 //return Ok(session);
+                Logs logs = new Logs();
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SellRQ) + "\n\n Response: " + ex.ToString(), "SellRequestError", "SameIndigoRT");
+
             }
             return _SellResponse;
         }
@@ -241,7 +244,7 @@ namespace Indigo
             catch (Exception ex)
             {
                 Logs logs = new Logs();
-                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + ex.ToString(), "BookingCommit", "IndigoOneWay");
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + ex.ToString(), "BookingCommitError", "SameIndigoRT");
                 //return Ok(session);
             }
             return _bookingCommitRes;

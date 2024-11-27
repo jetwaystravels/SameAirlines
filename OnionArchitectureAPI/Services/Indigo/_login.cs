@@ -49,7 +49,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
             }
             else
             {
-                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_logonRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logonResponseobj), "Logon", "IndigoRT");
+                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_logonRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logonResponseobj), "Logon", "SameIndigoRT");
             }
 
             return (LogonResponse)_logonResponseobj;

@@ -284,7 +284,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
                             var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest", "SameAirlineAirAsiaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest", "SameAirAsiaRT");
 
                             var JsonObjTripsell = JsonConvert.DeserializeObject<dynamic>(resultsTripsell);
                             var basefaretax = JsonObjTripsell.data.breakdown.journeyTotals.totalTax;
@@ -587,7 +587,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             {
                                                 AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();
                                                 var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(itenaryInfant) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/bookings/quote" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "Itenary", "SameAirlineAirAsiaRT");
+                                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(itenaryInfant) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/bookings/quote" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "Itenary", "SameAirAsiaRT");
                                                 var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                                 int Journeyscount = JsonObjPassengers.data.journeys.Count;
                                                 //end
@@ -1227,7 +1227,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();
                                             var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(itenaryInfant) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "Itenary", "SameAirlineAkasaRT");
+                                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(itenaryInfant) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "Itenary", "SameAkasaRT");
                                             var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                             int Journeyscount = JsonObjPassengers.data.journeys.Count;
                                             //end
@@ -2748,7 +2748,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 string columncount0 = string.Empty;
                                 var _responseSeatmap = responseSeatmap.Content.ReadAsStringAsync().Result;
-                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "GetSeatmap", "SameAirlineAirAsiaRT");
+                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "GetSeatmap", "SameAirAsiaRT");
 
                                 var JsonObjSeatmap = JsonConvert.DeserializeObject<dynamic>(_responseSeatmap);
                                 //var uniquekey1 = JsonObjSeatmap.data[0].seatMap.decks["1"].compartments.Y.units[0].unitKey;
@@ -3630,7 +3630,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responseSSRAvailabilty.IsSuccessStatusCode)
                         {
                             var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SSRAvailabilty) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/availability" + "\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "GetMealmap", "SameAirlineAirAsiaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SSRAvailabilty) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/availability" + "\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "GetMealmap", "SameAirAsiaRT");
 
                             var JsonObjresponseSSRAvailabilty = JsonConvert.DeserializeObject<dynamic>(_responseSSRAvailabilty);
                             var journeyKey1 = JsonObjresponseSSRAvailabilty.data.journeySsrs[0].journeyKey;
@@ -3841,7 +3841,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responseSSRAvailabilty.IsSuccessStatusCode)
                         {
                             var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SSRAvailabilty) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability" + "\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "GetMealmap", "SameAirlineAkasaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SSRAvailabilty) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability" + "\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "GetMealmap", "SameAkasaRT");
 
                             var JsonObjresponseSSRAvailabilty = JsonConvert.DeserializeObject<dynamic>(_responseSSRAvailabilty);
                             var journeyKey1 = JsonObjresponseSSRAvailabilty.data.journeySsrs[0].journeyKey;

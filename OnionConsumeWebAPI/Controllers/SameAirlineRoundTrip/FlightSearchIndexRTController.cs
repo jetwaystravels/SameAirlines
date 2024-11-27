@@ -177,7 +177,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         AirasiaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
                         //token = ((Newtonsoft.Json.Linq.JValue)value).Value.ToString();
                     }
-                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "Logon", "SameAirlineAirAsiaRT");
+                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "Logon", "SameAirAsiaRT");
 
 
                     HttpContext.Session.SetString("AirasiaTokan", JsonConvert.SerializeObject(AirasiaTokan.token));
@@ -325,7 +325,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     {
                         var results = responce1.Content.ReadAsStringAsync().Result;
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + results, "GetAvailability", "SameAirlineAirAsiaRT");
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + results, "GetAvailability", "SameAirAsiaRT");
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         dynamic jsonObj = JObject.Parse(results);
 
@@ -684,7 +684,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         {
 
                             var resultsAkasaAir = responceAkasaAir.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + resultsAkasaAir, "GetAvailability", "SameAirlineAkasaRT");
+                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + resultsAkasaAir, "GetAvailability", "SameAkasaRT");
                             var JsonAkasaAir = JsonConvert.DeserializeObject<dynamic>(resultsAkasaAir);
                             dynamic jsonAkasaAir = JObject.Parse(resultsAkasaAir);
 

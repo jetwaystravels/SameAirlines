@@ -177,7 +177,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         AirasiaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
                         //token = ((Newtonsoft.Json.Linq.JValue)value).Value.ToString();
                     }
-                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "Logon", "SameAirAsiaRT");
+                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "1-Create Token", "SameAirAsiaRT");
 
 
                     HttpContext.Session.SetString("AirasiaTokan", JsonConvert.SerializeObject(AirasiaTokan.token));
@@ -325,7 +325,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     {
                         var results = responce1.Content.ReadAsStringAsync().Result;
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + results, "GetAvailability", "SameAirAsiaRT");
+                        logs.WriteLogs("Request: " + _SimpleAvailabilityobj + "\n Response: " + results, "2-Simple_Availability", "SameAirAsiaRT");
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         dynamic jsonObj = JObject.Parse(results);
 

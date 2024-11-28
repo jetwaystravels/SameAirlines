@@ -119,7 +119,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responceCommit_Booking.IsSuccessStatusCode)
                         {
                             var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AirasiaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "SameAirlineAirAsia");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AirasiaCommitBooking + "\n Response: " + _responceCommit_Booking, "13-Commit_Booking", "SameAirAsiaRT");
 
                             var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
                         }
@@ -146,7 +146,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             //double TotalAmountMeal = 0;
                             //double TotaAmountBaggage = 0;
                             var _responcePNRBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + _responcePNRBooking, "GetBookingDeatils", "SameAirlineAirAsia");
+                            logs.WriteLogsR("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + _responcePNRBooking, "14-GetBookingPNR", "SameAirAsiaRT");
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");

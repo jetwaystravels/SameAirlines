@@ -1936,7 +1936,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         }
                                     }
                                     AirAsiaTripResponceobj.infttax = infttax * infantcount;
-                                    //AirAsiaTripResponceobj.inftbasefare = AirAsiaTripResponceobj.inftbasefare - infttax;
+                                    AirAsiaTripResponceobj.inftbasefare = AirAsiaTripResponceobj.inftbasefare - infttax;
 
                                 }
                             }

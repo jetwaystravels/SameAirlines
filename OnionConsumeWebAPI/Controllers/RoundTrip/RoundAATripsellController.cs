@@ -2362,7 +2362,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         {
 
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskey + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "11-AssignBaggage", "SameAkasaRT");
+                                                            logs1.WriteLogsR("Request: " + jsonSellSSR + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskey + "\n Response: " + _responseresponseSellSSR, "12-AssignBaggage", "SameAkasaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2395,7 +2395,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         if (responseSellSSR.IsSuccessStatusCode)
                                                         {
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskeyCon + "\n Response: " + _responseresponseSellSSR, "11-AssignBaggageReturn", "SameAkasaRT");
+                                                            logs1.WriteLogsR("Request: " + jsonSellSSR + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskeyCon + "\n Response: " + _responseresponseSellSSR, "12-AssignBaggageReturn", "SameAkasaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 

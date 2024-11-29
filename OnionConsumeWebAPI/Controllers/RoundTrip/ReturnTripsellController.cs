@@ -149,7 +149,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     flagsession = "H1";
                     airlinename = "omanair";
                 }
-
+                else if (fareKey[p].ToLower().Contains("saudia"))
+                {
+                    flagsession = "H1";
+                    airlinename = "saudia";
+                }
 
                 airlinenameforcommit.Airline.Add(airlinename);
 
@@ -923,8 +927,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
                             var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
-                            //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest", "AirAsiaRT");
-
+                            logs.WriteLogsR("Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v4/trip/sell" +"\n\n Request: " + AkasaAirTripSellRequest +"\n\n Response: " + resultsTripsell,"3-Trip_sell", "SameAkasaRT");
                             var JsonObjTripsell = JsonConvert.DeserializeObject<dynamic>(resultsTripsell);
 
                             var basefaretax = JsonObjTripsell.data.breakdown.journeyTotals.totalTax;
@@ -1227,7 +1230,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();
                                             var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(itenaryInfant) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "Itenary", "SameAkasaRT");
+                                            logs.WriteLogsR("Request: " + itenaryInfant + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote" + "\n Response: " + resultsTripsell, "4-Itenary"+ kj, "SameAkasaRT");
                                             var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                             int Journeyscount = JsonObjPassengers.data.journeys.Count;
                                             //end
@@ -2259,7 +2262,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         || _JourneykeyRTData.ToLower() == "qatar" || _JourneykeyRTData.ToLower() == "emirates" || _JourneykeyRTData.ToLower() == "thaiairways"
                         || _JourneykeyRTData.ToLower() == "etihad" || _JourneykeyRTData.ToLower() == "singaporeairline" || _JourneykeyRTData.ToLower() == "cathaypacific"
                         || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik"
-                        || _JourneykeyRTData.ToLower() == "omanair"
+                        || _JourneykeyRTData.ToLower() == "omanair" || _JourneykeyRTData.ToLower() == "saudia"
                         )
                     {
                         var modelJson = TempData["fareKeyModel"] as string;
@@ -2319,18 +2322,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _userName = "Universal API/uAPI5098257106-beb65aec";
                         _password = "Q!f5-d7A3D";
                         StringBuilder fareRepriceReq = new StringBuilder();
-                        dynamic AirfaredataL = null;
-                        dynamic AirfaredataR = null;
+                        SimpleAvailibilityaAddResponce AirfaredataL = null;
+                        SimpleAvailibilityaAddResponce AirfaredataR = null;
                         string[] _data = fareKey[0].ToString().Split("@0");
                         if (!string.IsNullOrEmpty(_data[0]))
                         {
-                            AirfaredataL = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());
+                            //AirfaredataL = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());
+                            AirfaredataL = JsonConvert.DeserializeObject<SimpleAvailibilityaAddResponce>(_data[0]);
                         }
 
                         _data = fareKey[1].Split("@1");
                         if (!string.IsNullOrEmpty(_data[0]))
                         {
-                            AirfaredataR = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());
+                            //AirfaredataR = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());
+                            AirfaredataR = JsonConvert.DeserializeObject<SimpleAvailibilityaAddResponce>(_data[0]);
                         }
 
 
@@ -2358,8 +2363,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         //farebasisdataL = AirfaredataL.FareBasisLeftdata;//  "UU1YXSII@UU1YXTII"
                         //farebasisdataR = AirfaredataR.FareBasisRightdata;
 
+
+
+                        //27/11/2024
                         string res = _objAvail.AirPriceGetRT_V2(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, farebasisdataL, farebasisdataR, "GDSRT");
+
                         //string res = _objAvail.AirPriceGetRT_V1(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, "GDSRT");
+
                         //string res = _objAvail.AirPriceGetRT(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, Airfaredata, "");
 
                         TravelPortParsing _objP = new TravelPortParsing();
@@ -2398,14 +2408,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     AADesignator AADesignatorobj = new AADesignator();
                                     AADesignatorobj.origin = getAirPriceRes[0].Bonds[0].Legs[0].Origin;
                                     AADesignatorobj.destination = getAirPriceRes[0].Bonds[0].Legs[j].Destination;
-                                    AADesignatorobj.departure = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[0].DepartureTime);
+                                    AADesignatorobj.departure = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[0].DepartureTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[0].DepartureTime);
                                     if (segmentscount > 1)
                                     {
-                                        AADesignatorobj.arrival = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[segmentscount - 1].ArrivalTime);
+                                        AADesignatorobj.arrival = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[segmentscount - 1].ArrivalTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[segmentscount - 1].ArrivalTime);
                                     }
                                     else
                                     {
-                                        AADesignatorobj.arrival = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
+                                        AADesignatorobj.arrival = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
                                     }
                                     if (getAirPriceRes[0].Bonds[0].Legs[0].AirlineName == "UK")
                                         getAirPriceRes[0].Bonds[0].Legs[0].AirlineName = "Vistara";
@@ -2415,6 +2425,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         getAirPriceRes[0].Bonds[0].Legs[0].AirlineName = "hahnair";
                                     else if (getAirPriceRes[0].Bonds[0].Legs[0].AirlineName == "TG")
                                         getAirPriceRes[0].Bonds[0].Legs[0].AirlineName = "ThaiAirways";
+                                    else if (getAirPriceRes[0].Bonds[0].Legs[0].AirlineName == "SV")
+                                        getAirPriceRes[0].Bonds[0].Legs[0].AirlineName = "Saudia";
                                     else if (getAirPriceRes[0].Bonds[0].Legs[0].AirlineName == "QR")
                                         getAirPriceRes[0].Bonds[0].Legs[0].AirlineName = "Qatar";
                                     else if (getAirPriceRes[0].Bonds[0].Legs[0].AirlineName == "EK")
@@ -2441,8 +2453,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     AADesignator AASegmentDesignatorobj = new AADesignator();
                                     AASegmentDesignatorobj.origin = getAirPriceRes[0].Bonds[0].Legs[j].Origin;
                                     AASegmentDesignatorobj.destination = getAirPriceRes[0].Bonds[0].Legs[j].Destination;
-                                    AASegmentDesignatorobj.departure = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime);
-                                    AASegmentDesignatorobj.arrival = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
+                                    AASegmentDesignatorobj.departure = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime);
+                                    AASegmentDesignatorobj.arrival = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
                                     AASegmentobj.designator = AASegmentDesignatorobj;
 
                                     //int fareCount = getAirPriceRes[0].Fare.cou
@@ -2508,15 +2520,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     AADesignator AAlegDesignatorobj = new AADesignator();
                                     AAlegDesignatorobj.origin = getAirPriceRes[0].Bonds[0].Legs[j].Origin;
                                     AAlegDesignatorobj.destination = getAirPriceRes[0].Bonds[0].Legs[j].Destination;
-                                    AAlegDesignatorobj.departure = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime);
-                                    AAlegDesignatorobj.arrival = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
+                                    AAlegDesignatorobj.departure = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime);
+                                    AAlegDesignatorobj.arrival = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
                                     AALeg.designator = AAlegDesignatorobj;
 
                                     AALeginfo AALeginfoobj = new AALeginfo();
                                     AALeginfoobj.arrivalTerminal = getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTerminal;
-                                    AALeginfoobj.arrivalTime = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
+                                    AALeginfoobj.arrivalTime = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime).DateTime;// Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].ArrivalTime);
                                     AALeginfoobj.departureTerminal = getAirPriceRes[0].Bonds[0].Legs[j].DepartureTerminal;
-                                    AALeginfoobj.departureTime = Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime);
+                                    AALeginfoobj.departureTime = DateTimeOffset.Parse(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime).DateTime; //Convert.ToDateTime(getAirPriceRes[0].Bonds[0].Legs[j].DepartureTime);
                                     AALeginfoobj.equipmentType = getAirPriceRes[0].Bonds[0].Legs[j]._Equipment;
                                     AALeg.legInfo = AALeginfoobj;
                                     AALeglist.Add(AALeg);
@@ -2934,6 +2946,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             _JourneykeyDataAA = Journeykeyairasia.Replace(@"""", string.Empty);
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                             //HttpResponseMessage responseSeatmap = await client.GetAsync(BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true");
                             HttpResponseMessage responseSeatmap = await client.GetAsync(BaseAkasaURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true");
 
@@ -2945,7 +2958,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 string columncount0 = string.Empty;
                                 var _responseSeatmap = responseSeatmap.Content.ReadAsStringAsync().Result;
-                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "GetSeatmap", "AirAsiaRT");
+                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "Seatmap"+(i+1), "SameAkasaRT");
 
                                 var JsonObjSeatmap = JsonConvert.DeserializeObject<dynamic>(_responseSeatmap);
                                 //var uniquekey1 = JsonObjSeatmap.data[0].seatMap.decks["1"].compartments.Y.units[0].unitKey;
@@ -3548,7 +3561,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         || _JourneykeyRTData.ToLower() == "qatar" || _JourneykeyRTData.ToLower() == "emirates" || _JourneykeyRTData.ToLower() == "thaiairways"
                         || _JourneykeyRTData.ToLower() == "etihad" || _JourneykeyRTData.ToLower() == "singaporeairline" || _JourneykeyRTData.ToLower() == "cathaypacific"
                         || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik"
-                        || _JourneykeyRTData.ToLower() == "omanair")
+                        || _JourneykeyRTData.ToLower() == "omanair" || _JourneykeyRTData.ToLower() == "saudia")
                     {
                         _SeatMapdata = new List<string>();
                         _SeatMapdata.Add("<Start>" + JsonConvert.SerializeObject("") + "<End>");
@@ -3566,7 +3579,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     #endregion
 
                     #endregion
-                    #region Meals AirAsia
+                    #region SSR_Availability AirAsia
                     if (_JourneykeyRTData.ToLower() == "airasia")
                     {
 
@@ -3779,7 +3792,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     #endregion
 
                     // Meal SSR Akasa  Air***********
-                    #region Meals AkasaAir
+                    #region Availability AkasaAir
                     if (_JourneykeyRTData.ToLower() == "akasaair")
                     {
                      
@@ -3841,7 +3854,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responseSSRAvailabilty.IsSuccessStatusCode)
                         {
                             var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SSRAvailabilty) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability" + "\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "GetMealmap", "SameAkasaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SSRAvailabilty) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability" + "\n Response: " + _responseSSRAvailabilty, "8-SSR_Availability", "SameAkasaRT");
 
                             var JsonObjresponseSSRAvailabilty = JsonConvert.DeserializeObject<dynamic>(_responseSSRAvailabilty);
                             var journeyKey1 = JsonObjresponseSSRAvailabilty.data.journeySsrs[0].journeyKey;
@@ -4345,7 +4358,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         || _JourneykeyRTData.ToLower() == "qatar" || _JourneykeyRTData.ToLower() == "emirates" || _JourneykeyRTData.ToLower() == "thaiairways"
                         || _JourneykeyRTData.ToLower() == "etihad" || _JourneykeyRTData.ToLower() == "singaporeairline" || _JourneykeyRTData.ToLower() == "cathaypacific"
                         || _JourneykeyRTData.ToLower() == "srilankan" || _JourneykeyRTData.ToLower() == "malaysia" || _JourneykeyRTData.ToLower() == "batik"
-                        || _JourneykeyRTData.ToLower() == "omanair")
+                        || _JourneykeyRTData.ToLower() == "omanair" || _JourneykeyRTData.ToLower() == "saudia")
                     {
                         Mealsdata = new List<string>();
                         Mealsdata.Add("<Start>" + JsonConvert.SerializeObject("") + "<End>");

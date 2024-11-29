@@ -298,7 +298,7 @@
                     || item.segments[i].identifier.carrierCode.Equals("TG") || item.segments[i].identifier.carrierCode.Equals("EY") || item.segments[i].identifier.carrierCode.Equals("MH")
                     || item.segments[i].identifier.carrierCode.Equals("QR") || item.segments[i].identifier.carrierCode.Equals("CX") || item.segments[i].identifier.carrierCode.Equals("UL")
                     || item.segments[i].identifier.carrierCode.Equals("EK") || item.segments[i].identifier.carrierCode.Equals("SQ") || item.segments[i].identifier.carrierCode.Equals("OD")
-                    || item.segments[i].identifier.carrierCode.Equals("WY")
+                    || item.segments[i].identifier.carrierCode.Equals("WY") || item.segments[i].identifier.carrierCode.Equals("SV")
                     )
                     {
 
@@ -471,6 +471,11 @@
                                             {
                                                 AirLinename = "Thai Airways";
                                                 <img class="size-30" src="~/img/flight-logo-icon/ta.png" alt="image">
+                                            }
+                                            else if (item.segments[i].identifier.carrierCode.Equals("SV"))
+                                            {
+                                                AirLinename = "Saudia";
+                                                <img class="size-30" src="~/img/flight-logo-icon/SV.png" alt="image">
                                             }
                                             else
                                             {

@@ -589,13 +589,14 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     loginobject.credentials = _CredentialsAkasha;
                     //TempData["AirAsiaLogin"] = login.credentials.Image;
                     AirasiaTokan = new AirasiaTokan();
-                    AirasialoginRequest = JsonConvert.SerializeObject(loginobject, Formatting.Indented);
+                    var  AkasaloginRequest = JsonConvert.SerializeObject(loginobject, Formatting.Indented);
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage responcedata = await client.PostAsJsonAsync(AppUrlConstant.AkasaTokan, loginobject);
                     if (responcedata.IsSuccessStatusCode)
                     {
 
                         var results = responcedata.Content.ReadAsStringAsync().Result;
+                        logs.WriteLogs("Request: " + AkasaloginRequest + "\n\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "1-Create Token", "SameAkasaRT");
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         AirasiaTokan.token = JsonObj.data.token;
                         AirasiaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
@@ -684,7 +685,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         {
 
                             var resultsAkasaAir = responceAkasaAir.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + resultsAkasaAir, "GetAvailability", "SameAkasaRT");
+                            logs.WriteLogsR("Request: " + _SimpleAvailabilityobj + "\n\n Response: " + resultsAkasaAir, "2-Simple_Availability", "SameAkasaRT");
                             var JsonAkasaAir = JsonConvert.DeserializeObject<dynamic>(resultsAkasaAir);
                             dynamic jsonAkasaAir = JObject.Parse(resultsAkasaAir);
 
@@ -1633,8 +1634,9 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     httpContextAccessorInstance = new HttpContextAccessor();
                     TravelPort _objAvail = null;
                     _objAvail = new TravelPort(httpContextAccessorInstance);
-                    //res = _objAvail.GetAvailabiltyRT(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, "GDSRT");
-                    res = _objAvail.GetAvailabiltyRT__(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, "GDSRT");
+                    res = _objAvail.GetAvailabiltyRT(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, "GDSRT");
+                    //27/11/2024
+                    //res = _objAvail.GetAvailabiltyRT__(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, "GDSRT");
                     TempData["origin"] = _GetfligthModel.origin;
                     TempData["destination"] = _GetfligthModel.destination;
                     TravelPortParsing _objP = new TravelPortParsing();
@@ -1644,8 +1646,9 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         getAvailRes = _objP.ParseLowFareSearchRsp2(res, "OneWay", Convert.ToDateTime(_GetfligthModel.beginDate));
                     }
                     //var getAvailRes = _objP.ParseLowFareSearchRsp2(res, "OneWay", Convert.ToDateTime(_GetfligthModel.beginDate));
-                    //string test = JsonConvert.SerializeObject(getAvailRes, Formatting.Indented);
-                    //logs.WriteLogs("\n Response: " + test, "gdsLowfaremodel", "GDSOneWay");
+                    
+                    string test = JsonConvert.SerializeObject(getAvailRes, Formatting.Indented);
+                    logs.WriteLogs("\n Response: " + test, "gdsLowfaremodel", "GDSOneWay");
 
                     // to do
                     count2 = 0;
@@ -1757,13 +1760,13 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     SegmentDesignatorobj.departure = Convert.ToDateTime(getAvailRes[i].Bonds[k].Legs[l].DepartureTime);
                                     SegmentDesignatorobj.arrival = Convert.ToDateTime(getAvailRes[i].Bonds[k].Legs[l].ArrivalTime);
 
-                                    SegmentDesignatorobj._DepartureDate = getAvailRes[i].Bonds[k].Legs[l]._DepartureDate;
+                                    SegmentDesignatorobj._DepartureDate = getAvailRes[i].Bonds[k].Legs[l].DepartureTime;
                                     SegmentDesignatorobj._AvailabilitySource = getAvailRes[i].Bonds[k].Legs[l]._AvailabilitySource;
                                     SegmentDesignatorobj._AvailabilityDisplayType = getAvailRes[i].Bonds[k].Legs[l]._AvailabilityDisplayType;
                                     SegmentDesignatorobj._FlightTime = getAvailRes[i].Bonds[k].Legs[l].Duration;
                                     SegmentDesignatorobj._Equipment = getAvailRes[i].Bonds[k].Legs[l]._Equipment;
                                     SegmentDesignatorobj._Distance = getAvailRes[i].Bonds[k].Legs[l]._Distance;
-                                    SegmentDesignatorobj._ArrivalDate = getAvailRes[i].Bonds[k].Legs[l]._ArrivalDate;
+                                    SegmentDesignatorobj._ArrivalDate = getAvailRes[i].Bonds[k].Legs[l].ArrivalTime;
                                     SegmentDesignatorobj._Group = getAvailRes[i].Bonds[k].Legs[l].Group;
                                     SegmentDesignatorobj._ProviderCode = getAvailRes[i].Bonds[k].Legs[l].ProviderCode;
                                     SegmentDesignatorobj._ClassOfService = getAvailRes[i].Bonds[k].Legs[l].FareClassOfService;
@@ -1772,7 +1775,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     Segmentobj.designator = SegmentDesignatorobj;
                                     Identifier Identifier = new Identifier();
                                     Identifier.identifier = getAvailRes[i].Bonds[k].Legs[l].FlightNumber;
-                                    if (Identifier.identifier == "191")
+                                    if (Identifier.identifier == "757" || Identifier.identifier == "598")
                                     {
                                         //var t = SimpleAvailibilityaAddResponcelist[0].segments[0].identifier.identifier.ToString();
                                     }
@@ -1934,6 +1937,8 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
 
                                 else if (_SimpleAvailibilityaAddResponceobj.segments[0].identifier.carrierCode.Equals("TG"))
                                     _SimpleAvailibilityaAddResponceobj.Airline = Airlines.ThaiAirways;
+                                else if (_SimpleAvailibilityaAddResponceobj.segments[0].identifier.carrierCode.Equals("SV"))
+                                    _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Saudia;
                                 else if (_SimpleAvailibilityaAddResponceobj.segments[0].identifier.carrierCode.Equals("QR"))
                                     _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Qatar;
                                 else if (_SimpleAvailibilityaAddResponceobj.segments[0].identifier.carrierCode.Equals("EK"))
@@ -1968,8 +1973,8 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     //{
 
                                     //}
-                                    if (matchingItineraries1.Count >= 1)
-                                        continue;
+                                    //if (matchingItineraries1.Count >= 1)
+                                        //continue;
                                 }
                                 catch (Exception ex)
                                 {
@@ -2055,13 +2060,13 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     SegmentDesignatorobj.departure = Convert.ToDateTime(getAvailRes[i].Bonds[k].Legs[l].DepartureTime);
                                     SegmentDesignatorobj.arrival = Convert.ToDateTime(getAvailRes[i].Bonds[k].Legs[l].ArrivalTime);
 
-                                    SegmentDesignatorobj._DepartureDate = getAvailRes[i].Bonds[k].Legs[l]._DepartureDate;
+                                    SegmentDesignatorobj._DepartureDate = getAvailRes[i].Bonds[k].Legs[l].DepartureTime;
                                     SegmentDesignatorobj._AvailabilitySource = getAvailRes[i].Bonds[k].Legs[l]._AvailabilitySource;
                                     SegmentDesignatorobj._AvailabilityDisplayType = getAvailRes[i].Bonds[k].Legs[l]._AvailabilityDisplayType;
                                     SegmentDesignatorobj._FlightTime = getAvailRes[i].Bonds[k].Legs[l].Duration;
                                     SegmentDesignatorobj._Equipment = getAvailRes[i].Bonds[k].Legs[l]._Equipment;
                                     SegmentDesignatorobj._Distance = getAvailRes[i].Bonds[k].Legs[l]._Distance;
-                                    SegmentDesignatorobj._ArrivalDate = getAvailRes[i].Bonds[k].Legs[l]._ArrivalDate;
+                                    SegmentDesignatorobj._ArrivalDate = getAvailRes[i].Bonds[k].Legs[l].ArrivalTime;
                                     SegmentDesignatorobj._Group = getAvailRes[i].Bonds[k].Legs[l].Group;
                                     SegmentDesignatorobj._ProviderCode = getAvailRes[i].Bonds[k].Legs[l].ProviderCode;
                                     SegmentDesignatorobj._ClassOfService = getAvailRes[i].Bonds[k].Legs[l].FareClassOfService;
@@ -2070,7 +2075,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     Segmentobj.designator = SegmentDesignatorobj;
                                     Identifier Identifier = new Identifier();
                                     Identifier.identifier = getAvailRes[i].Bonds[k].Legs[l].FlightNumber;
-                                    if (Identifier.identifier == "687")
+                                    if (Identifier.identifier == "190")
                                     {
                                         //var t = SimpleAvailibilityaAddResponcelist[0].segments[0].identifier.identifier.ToString();
                                     }
@@ -2233,6 +2238,8 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
 
                                 else if (_SimpleAvailibilityaAddResponceobjR.segments[0].identifier.carrierCode.Equals("TG"))
                                     _SimpleAvailibilityaAddResponceobjR.Airline = Airlines.ThaiAirways;
+                                else if (_SimpleAvailibilityaAddResponceobjR.segments[0].identifier.carrierCode.Equals("SV"))
+                                    _SimpleAvailibilityaAddResponceobjR.Airline = Airlines.Saudia;
                                 else if (_SimpleAvailibilityaAddResponceobjR.segments[0].identifier.carrierCode.Equals("QR"))
                                     _SimpleAvailibilityaAddResponceobjR.Airline = Airlines.Qatar;
                                 else if (_SimpleAvailibilityaAddResponceobjR.segments[0].identifier.carrierCode.Equals("EK"))

@@ -371,7 +371,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;
                             Logs logs1 = new Logs();
-                            logs1.WriteLogsR("Request: " + _ContactModel + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking/contacts" + "\n Response: " + _responseAddContact, "Add_Contacts", "SameAkasaRT");
+                            logs1.WriteLogsR("Request: " + _ContactModel + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking/contacts" + "\n Response: " + _responseAddContact, "5-Add_Contacts", "SameAkasaRT");
 
                             var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
                         }
@@ -840,7 +840,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
                                     Logs logs = new Logs();
-                                    //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_PassengersModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey + "\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "Update passenger", "AkasaAirRT");
+                                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_PassengersModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey + "\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "6-Add_passenger_"+i, "SameAkasaRT");
 
                                     var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                 }
@@ -889,7 +889,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
                                         Logs logs = new Logs();
-                                        //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_PassengersModel1) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v3/booking/passengers/" + passengerdetails[k].passengerkey + "/infant" + "\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "Update passenger_Infant", "AkasaAirRT");
+                                        logs.WriteLogsR("Request: " + _PassengersModel1 + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v3/booking/passengers/" + passengerdetails[k].passengerkey + "/infant" + "\n Response: " + _responsePassengers, "7-Add_Infant"+k, "SameAkasaRT");
 
                                         var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                     }
@@ -905,7 +905,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     var _responceGetBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
                                     Logs logs = new Logs();
-                                    //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetBookingRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AkasaAirRT");
+                                    //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetBookingRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "SameAkasaRT");
 
                                     var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
                                 }
@@ -2271,7 +2271,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         {
 
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR", "SameAkasaRT");
+                                                            logs1.WriteLogsR("Request: " + jsonSellSSR + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + _responseresponseSellSSR, "9-Assignmeal", "SameAkasaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2305,7 +2305,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         if (responseSellSSR.IsSuccessStatusCode)
                                                         {
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR", "SameAkasaRT");
+                                                            logs1.WriteLogsR("Request: " + jsonSellSSR + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + _responseresponseSellSSR, "9-AssignmealReturn", "SameAkasaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2335,7 +2335,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             {
                                                 continue;
                                             }
-                                            if (BaggageSSrkey[bagid].ToLower().Contains("akasaair") && _a == 0 && (BaggageSSrkey[bagid].ToLower().Contains("rt0") || BaggageSSrkey[bagid].ToLower().Contains("rt1")))
+                                            if (BaggageSSrkey[bagid].ToLower().Contains("akasaair") && _a == 0 && (BaggageSSrkey[bagid].ToLower().Contains("oneway0") || BaggageSSrkey[bagid].ToLower().Contains("oneway1")))
                                             {
                                                 if (BaggageSSrkey[bagid].Length > 1)
                                                 {
@@ -2362,7 +2362,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         {
 
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskey + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR", "SameAkasaRT");
+                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskey + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "11-AssignBaggage", "SameAkasaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2395,7 +2395,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         if (responseSellSSR.IsSuccessStatusCode)
                                                         {
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskeyCon + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR", "SameAkasaRT");
+                                                            logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/" + bagskeyCon + "\n Response: " + _responseresponseSellSSR, "11-AssignBaggageReturn", "SameAkasaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2991,7 +2991,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    //logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "AssignSeat", "AkasaAirRT");
+                                                    logs1.WriteLogsR("Request: " + jsonSeatAssignmentRequest + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + _responseSeatAssignment, "11-AssignSeat", "SameAkasaRT");
                                                     var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
@@ -3017,7 +3017,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    //logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "AssignSeat", "AkasaAirRT");
+                                                    logs1.WriteLogsR("Request: " + jsonSeatAssignmentRequest + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + _responseSeatAssignment, "11-AssignSeat", "SameAkasaRT");
                                                     var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
@@ -3043,7 +3043,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    //logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "AssignSeat", "AkasaAirRT");
+                                                    logs1.WriteLogsR("Request: " + jsonSeatAssignmentRequest + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + _responseSeatAssignment, "11-AssignSeat", "SameAkasaRT");
                                                     var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
@@ -3068,7 +3068,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    //logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "AssignSeat", "AkasaAirRT");
+                                                    logs1.WriteLogsR("Request: " + jsonSeatAssignmentRequest + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + _responseSeatAssignment, "11-AssignSeat", "SameAkasaRT");
                                                     var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 

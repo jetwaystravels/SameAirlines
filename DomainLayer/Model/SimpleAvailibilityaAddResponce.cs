@@ -64,7 +64,8 @@ namespace DomainLayer.Model
         SriLankan = 13,
         Malaysia = 14,
         Batik=15,
-        OmanAir=16
+        OmanAir=16,
+        Saudia=17
     }
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);

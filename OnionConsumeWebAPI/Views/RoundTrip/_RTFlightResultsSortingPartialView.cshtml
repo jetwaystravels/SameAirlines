@@ -118,6 +118,10 @@
                             {
                                 <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
                             }
+                            else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
+                            {
+                                <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                            }
                             else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR"))
                             {
                                 <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
@@ -373,6 +377,10 @@
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
                                                         }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("SV"))
+                                                        {
+                                                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                                                        }
                                                         else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("QR"))
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
@@ -454,7 +462,9 @@
                                                                     <div class="lh-15 fw-500">@CompanyName</div>
                                                                     @{
                                                                         SegmentDatacount = Model.SimpleAvailibilityaAddResponcelist[j].segments.Count;
-                                                                        <div class="fliCode"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode - @Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.identifier </div>
+                                                                        <div class="fliCode">
+                                                                            @Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode - @Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.identifier (@Model.SimpleAvailibilityaAddResponcelist[j].segments[a].designator._ClassOfService)
+                                                                      </div>
                                                                     }
                                                                 </div>
                                                             </div>
@@ -872,6 +882,10 @@
                             {
                                 <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
                             }
+                            else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SV"))
+                            {
+                                <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                            }
                             else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QR"))
                             {
                                 <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
@@ -1119,6 +1133,10 @@
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
                                                         }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.carrierCode.Equals("SV"))
+                                                        {
+                                                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                                                        }
                                                         else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.carrierCode.Equals("QR"))
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
@@ -1223,6 +1241,10 @@
                                                                     {
                                                                         CompanyName = "Thai Airways International";
                                                                     }
+                                                                    else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.carrierCode.Equals("SV"))
+                                                                    {
+                                                                        CompanyName = "Saudia";
+                                                                    }
                                                                     else
                                                                     {
                                                                         CompanyName = "Air India Exp..";
@@ -1230,7 +1252,7 @@
                                                                     <div class="lh-15 fw-500">@CompanyName</div>
                                                                     @{
                                                                         SegmentDatacount = Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count;
-                                                                        <div class="fliCode"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.carrierCode - @Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.identifier </div>
+                                                                        <div class="fliCode"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.carrierCode - @Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].identifier.identifier (@Model.SimpleAvailibilityaAddResponcelistR[j].segments[a].designator._ClassOfService) </div>
                                                                     }
                                                                 </div>
                                                             </div>

@@ -131,8 +131,8 @@
         var storedFare = localStorage.getItem('selectedFare');
         var storedFareR = localStorage.getItem('selectedReturnFare');
         if (storedFare !== storedFareR) {
-            alert("Please select the same fare.");
-            return false // Stop the function if fares are not the same
+            //alert("Please select the same fare.");
+            //return false // Stop the function if fares are not the same
         }
 
         const form = new FormData();
@@ -323,6 +323,10 @@
                                                         else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG"))
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
+                                                        {
+                                                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
                                                         }
                                                         else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR"))
                                                         {
@@ -562,7 +566,7 @@
                                                         if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH")
                                                         || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX")
                                                         || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("OD") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL")
-                                                        || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY")
+                                                        || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV")
                                                         )
                                                         {
                                                             string dataGDS = "";
@@ -573,15 +577,15 @@
                                                             catch (Exception ex)
                                                             {
 
-							    }
-							    <input type="hidden" class="fareKey" value="@dataGDS" />
-							    <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
-							}
-							else
-							{
-							    <input type="hidden" class="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
-							    <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-							}
+                                                            }
+                                                            <input type="hidden" class="fareKey" value="@dataGDS" />
+                                                            <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="hidden" class="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
+                                                            <input type="hidden" class="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
+                                                        }
 
                                                     }
 
@@ -593,7 +597,7 @@
                                                         if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK")
                                                         || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX")
                                                         || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("OD") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL")
-                                                        || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY"))
+                                                        || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY") || Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
                                                         {
                                                             <span>@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass </span>
                                                         }
@@ -1052,6 +1056,10 @@
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
                                                         }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SV"))
+                                                        {
+                                                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                                                        }
                                                         else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QR"))
                                                         {
                                                             <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
@@ -1283,7 +1291,7 @@
                                                         if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("AI") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("UK") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("H1") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("MH")
                                                         || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("TG") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("EY") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QR") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("CX")
                                                         || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("EK") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SQ") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("OD") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("UL")
-                                                        || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("WY"))
+                                                        || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("WY") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SV"))
                                                         {
                                                             string dataGDS = "";
                                                             try
@@ -1296,13 +1304,13 @@
                                                             }
                                                             <input type="hidden" class="fareKeyReturn" value="@dataGDS" />
 
-							    <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
-							}
-							else
-							{
-							    <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].journeyKey" />
-							    <input type="hidden" class="fareKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
-							}
+                                                            <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="hidden" class="journeyKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].journeyKey" />
+                                                            <input type="hidden" class="fareKeyReturn" value="@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].fareKey" />
+                                                        }
 
                                                     }
 
@@ -1314,7 +1322,7 @@
                                                         if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("AI") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("UK")
                                                         || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("TG") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("EY") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QR") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("CX")
                                                         || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("EK") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SQ") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("OD") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("UL")
-                                                        || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("MH") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("WY"))
+                                                        || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("MH") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("WY") || Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SV"))
                                                         {
                                                             <span>@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass</span>
                                                         }

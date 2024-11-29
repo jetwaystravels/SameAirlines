@@ -243,6 +243,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                                     case "TG":
                                                                                                         leg.FlightName = "Thai Airways International";
                                                                                                         break;
+                                                                                                    case "SV":
+                                                                                                        leg.FlightName = "Saudia";
+                                                                                                        break;
                                                                                                     case "UL":
                                                                                                         leg.FlightName = "SriLankan Airlines";
                                                                                                         break;
@@ -1325,6 +1328,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                                                 case "TG":
                                                                                                                     leg.FlightName = "Thai Airways International";
                                                                                                                     break;
+                                                                                                                case "SV":
+                                                                                                                    leg.FlightName = "Saudia";
+                                                                                                                    break;
                                                                                                                 case "UL":
                                                                                                                     leg.FlightName = "SriLankan Airlines";
                                                                                                                     break;
@@ -1682,7 +1688,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                             if (airPricingSolution.Attributes["TotalPrice"].Value.Contains("INR"))
                                             {
                                                 fare.TotalFareWithOutMarkUp = Convert.ToDecimal(airPricingSolution.Attributes["TotalPrice"].Value.Remove(0, 3));
-                                                if (fare.TotalFareWithOutMarkUp == 93277 || fare.TotalFareWithOutMarkUp == 242900)
+                                                if (fare.TotalFareWithOutMarkUp == 55057)
                                                 {
 
                                                 }
@@ -1712,6 +1718,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                 fare.TotalTaxWithOutMarkUp = Convert.ToDecimal(airPricingSolution.Attributes["ApproximateTaxes"].Value.Remove(0, 3)) + TMarkup;
                                             }
                                             fare.PaxFares = new List<GDSResModel.PaxFare>();
+                                            bool flag = true;
                                             foreach (XmlNode lowfarepric in airPricingSolution)
                                             {
                                                 switch (lowfarepric.Name)
@@ -1811,6 +1818,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                             case "TG":
                                                                                                 leg.FlightName = "Thai Airways International";
                                                                                                 break;
+                                                                                            case "SV":
+                                                                                                leg.FlightName = "Saudia";
+                                                                                                break;
                                                                                             case "UL":
                                                                                                 leg.FlightName = "SriLankan Airlines";
                                                                                                 break;
@@ -1882,6 +1892,10 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                         listOfBound.Add(bond);
                                                         break;
                                                     case "air:AirPricingInfo":
+                                                        if(flag==false)
+                                                        {
+                                                            continue;
+                                                        }
                                                         segmentid = string.Empty;
                                                         paxFare = new GDSResModel.PaxFare();
                                                         paxFare.Fare = new List<GDSResModel.FareDetail>();
@@ -1889,6 +1903,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                         {
                                                             paxFare.Refundable = bool.Parse(lowfarepric.Attributes["Refundable"].Value);
                                                         }
+                                                        flag=false;
                                                         foreach (XmlNode airPricingInfo in lowfarepric)
                                                         {
                                                             if (airPricingInfo.Name.Equals("air:BookingInfo", StringComparison.OrdinalIgnoreCase))
@@ -2643,6 +2658,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                                                                                 break;
                                                                             case "TG":
                                                                                 leg.FlightName = "Thai Airways International";
+                                                                                break;
+                                                                            case "SV":
+                                                                                leg.FlightName = "Saudia";
                                                                                 break;
                                                                             case "UL":
                                                                                 leg.FlightName = "SriLankan Airlines";

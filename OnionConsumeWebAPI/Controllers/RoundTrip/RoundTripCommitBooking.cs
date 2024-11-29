@@ -712,7 +712,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responceCommit_Booking.IsSuccessStatusCode)
                         {
                             var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AkasaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "AkasaAirRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AkasaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "SameAkasaRT");
 
                             var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
 
@@ -733,7 +733,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htBagdata = new Hashtable();
                             var _responcePNRBooking = responcepnrBooking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetFinalRequest") + "Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "GetBoking", "SameAkasaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetFinalRequest") + "Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "GetBokingPNR", "SameAkasaRT");
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");
@@ -2816,7 +2816,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         || data.Airline[k1].ToLower().Contains("qatar") || data.Airline[k1].ToLower().Contains("etihad") 
                         || data.Airline[k1].ToLower().Contains("emirates") || data.Airline[k1].ToLower().Contains("singaporeairline") || data.Airline[k1].ToLower().Contains("malaysia")
                         || data.Airline[k1].ToLower().Contains("thaiairways") || data.Airline[k1].ToLower().Contains("cathaypacific") || data.Airline[k1].ToLower().Contains("srilankan")
-                        || data.Airline[k1].ToLower().Contains("batik") || data.Airline[k1].ToLower().Contains("omanair")))
+                        || data.Airline[k1].ToLower().Contains("batik") || data.Airline[k1].ToLower().Contains("omanair") || data.Airline[k1].ToLower().Contains("saudia")))
                     {
                         //flagIndigo = false;
                         #region Indigo Commit

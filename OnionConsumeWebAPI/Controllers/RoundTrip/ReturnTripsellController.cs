@@ -1936,7 +1936,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         }
                                     }
                                     AirAsiaTripResponceobj.infttax = infttax * infantcount;
-                                    AirAsiaTripResponceobj.inftbasefare = AirAsiaTripResponceobj.inftbasefare - infttax;
+                                    //AirAsiaTripResponceobj.inftbasefare = AirAsiaTripResponceobj.inftbasefare - infttax;
 
                                 }
                             }
@@ -2324,14 +2324,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         StringBuilder fareRepriceReq = new StringBuilder();
                         SimpleAvailibilityaAddResponce AirfaredataL = null;
                         SimpleAvailibilityaAddResponce AirfaredataR = null;
-                        string[] _data = fareKey[0].ToString().Split("@0");
+                        string[] _data = fareKey[0].ToString().Split("@0f");
                         if (!string.IsNullOrEmpty(_data[0]))
                         {
                             //AirfaredataL = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());
                             AirfaredataL = JsonConvert.DeserializeObject<SimpleAvailibilityaAddResponce>(_data[0]);
                         }
 
-                        _data = fareKey[1].Split("@1");
+                        _data = fareKey[1].Split("@1f");
                         if (!string.IsNullOrEmpty(_data[0]))
                         {
                             //AirfaredataR = JsonConvert.DeserializeObject<dynamic>(_data[0].ToString());

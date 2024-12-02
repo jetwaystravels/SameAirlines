@@ -1675,8 +1675,8 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                     //{
 
                                     //}
-                                    if (matchingItineraries1.Count >= 1)
-                                        continue;
+                                    //if (matchingItineraries1.Count >= 1)
+                                        //continue;
                                 }
                                 catch (Exception ex)
                                 {

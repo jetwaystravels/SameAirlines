@@ -685,7 +685,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         {
 
                             var resultsAkasaAir = responceAkasaAir.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + _SimpleAvailabilityobj + "\n\n Response: " + resultsAkasaAir, "2-Simple_Availability", "SameAkasaRT");
+                            logs.WriteLogsR("Request: " + json + "\n\n Response: " + resultsAkasaAir, "2-Simple_Availability", "SameAkasaRT");
                             var JsonAkasaAir = JsonConvert.DeserializeObject<dynamic>(resultsAkasaAir);
                             dynamic jsonAkasaAir = JObject.Parse(resultsAkasaAir);
 

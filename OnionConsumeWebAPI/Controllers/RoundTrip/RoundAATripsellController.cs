@@ -2260,9 +2260,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
-                                                        _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                        //_sellSSRModel.forceWaveOnSell = false;
+                                                        //_sellSSRModel.currencyCode = "INR";
+                                                        //_sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2295,9 +2295,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
-                                                        _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                       //_sellSSRModel.forceWaveOnSell = false;
+                                                       // _sellSSRModel.currencyCode = "INR";
+                                                       // _sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2351,9 +2351,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
-                                                        _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                        //_sellSSRModel.forceWaveOnSell = false;
+                                                        //_sellSSRModel.currencyCode = "INR";
+                                                        //_sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2369,7 +2369,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     }
                                                 }
                                             }
-                                            else if (BaggageSSrkey[bagid].ToLower().Contains("akasaair") && _a == 1 && (BaggageSSrkey[bagid].ToLower().Contains("rt0") || BaggageSSrkey[bagid].ToLower().Contains("rt1")))
+                                            else if (BaggageSSrkey[bagid].ToLower().Contains("akasaair") && _a == 0 && (BaggageSSrkey[bagid].ToLower().Contains("rt0") || BaggageSSrkey[bagid].ToLower().Contains("rt1")))
                                             {
                                                 if (BaggageSSrkey[bagid].Length > 1)
                                                 {
@@ -2385,9 +2385,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
-                                                        _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                        //_sellSSRModel.forceWaveOnSell = false;
+                                                        //_sellSSRModel.currencyCode = "INR";
+                                                        //_sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

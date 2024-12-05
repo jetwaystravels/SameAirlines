@@ -166,18 +166,20 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     TempData["AirAsiaLogin"] = login.credentials.Image;
                     AirasiaTokan AirasiaTokan = new AirasiaTokan();
                     var AirasialoginRequest = JsonConvert.SerializeObject(login, Formatting.Indented);
+                    logs.WriteLogsR(AirasialoginRequest , "1-Tokan_Request", "SameAirAsiaRT");
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage responce = await client.PostAsJsonAsync(AppUrlConstant.AirasiaTokan, login);
 
                     if (responce.IsSuccessStatusCode)
                     {
                         var results = responce.Content.ReadAsStringAsync().Result;
+                        logs.WriteLogsR(results, "1-Token_Responce", "SameAirAsiaRT");
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         AirasiaTokan.token = JsonObj.data.token;
                         AirasiaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
                         //token = ((Newtonsoft.Json.Linq.JValue)value).Value.ToString();
                     }
-                    logs.WriteLogs("Request: " + AirasialoginRequest + "\n Response: " + JsonConvert.SerializeObject(AirasiaTokan.token), "1-Create Token", "SameAirAsiaRT");
+                   
 
 
                     HttpContext.Session.SetString("AirasiaTokan", JsonConvert.SerializeObject(AirasiaTokan.token));
@@ -267,10 +269,11 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     Passengerssimple _Passengerssimple = new Passengerssimple();
                     _Passengerssimple.types = _typeslist;
                     _SimpleAvailabilityobj.passengers = _Passengerssimple;
-                    ////_codes.currencyCode = "INR";
-                    //_SimpleAvailabilityobj.codes = _codes;
-                    _SimpleAvailabilityobj.sourceOrganization = "";
-                    _SimpleAvailabilityobj.currentSourceOrganization = "";
+                     Codessimple _codes = new Codessimple();
+                    _codes.currencyCode = "INR";
+                    _SimpleAvailabilityobj.codes = _codes;
+                    //_SimpleAvailabilityobj.sourceOrganization = "";
+                   // _SimpleAvailabilityobj.currentSourceOrganization = "";
                     _SimpleAvailabilityobj.promotionCode = "OTAPROMO";
                     string[] sortOptions = new string[1];
                     sortOptions[0] = "ServiceType";
@@ -313,6 +316,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     List<SimpleAvailibilityaAddResponce> SimpleAvailibilityaAddResponcelistR = new List<SimpleAvailibilityaAddResponce>();
                     SimpleAvailibilityaAddResponce _SimpleAvailibilityaAddResponceobjR = new SimpleAvailibilityaAddResponce();
                     var json = JsonConvert.SerializeObject(_SimpleAvailabilityobj, Formatting.Indented);
+                    logs.WriteLogsR(json, "2-SimpleAvailability_Req", "SameAirAsiaRT");
 
                     //End :Air India express SimpleAvailability Request 
 
@@ -324,8 +328,9 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     if (responce1.IsSuccessStatusCode)
                     {
                         var results = responce1.Content.ReadAsStringAsync().Result;
+                        logs.WriteLogsR(results, "2-SimpleAvailability_Res", "SameAirAsiaRT");
 
-                        logs.WriteLogs("Request: " + _SimpleAvailabilityobj + "\n Response: " + results, "2-Simple_Availability", "SameAirAsiaRT");
+                        //logs.WriteLogs("Request: " + json + "\n Response: " + results, "2-Simple_Availability", "SameAirAsiaRT");
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         dynamic jsonObj = JObject.Parse(results);
 

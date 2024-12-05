@@ -41,7 +41,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             sbReq = new StringBuilder();
             sbReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
             sbReq.Append("<soap:Body>");
-            sbReq.Append("<air:LowFareSearchReq xmlns:com=\"http://www.travelport.com/schema/common_v52_0\" xmlns:air=\"http://www.travelport.com/schema/air_v52_0\" AuthorizedBy=\"MNM\" SolutionResult=\"true\" TraceId=\"" + newGuid + "\" TargetBranch=\"" + _targetBranch + "\" ReturnUpsellFare=\"true\">");
+            sbReq.Append("<air:LowFareSearchReq xmlns:com=\"http://www.travelport.com/schema/common_v52_0\" xmlns:air=\"http://www.travelport.com/schema/air_v52_0\" AuthorizedBy=\"Travelport\" SolutionResult=\"true\" TraceId=\"" + newGuid + "\" TargetBranch=\"" + _targetBranch + "\" ReturnUpsellFare=\"true\">");
             sbReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
             sbReq.Append("<air:SearchAirLeg>");
             sbReq.Append("<air:SearchOrigin>");
@@ -150,7 +150,9 @@ namespace OnionArchitectureAPI.Services.Travelport
 
 
             }
-            sbReq.Append("<air:AirPricingModifiers FaresIndicator=\"AllFares\" ETicketability=\"Yes\"> </air:AirPricingModifiers>");
+            sbReq.Append("<air:AirPricingModifiers FaresIndicator=\"AllFares\" ETicketability=\"Required\">"); 
+            sbReq.Append("<FlightType TripleInterlineCon=\"false\" DoubleInterlineCon=\"false\" SingleInterlineCon=\"true\" TripleOnlineCon=\"false\" DoubleOnlineCon=\"false\" SingleOnlineCon=\"true\" StopDirects=\"true\" NonStopDirects=\"true\" />");
+            sbReq.Append("</air:AirPricingModifiers>");
             sbReq.Append("</air:LowFareSearchReq></soap:Body></soap:Envelope>");
 
 
@@ -292,7 +294,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             else
             {
-                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(sbReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAvailability", "SameGDSRT");
+                logs.WriteLogsR("Request: " + sbReq + "\n\n Response: " + res, "GetAvailability", "SameGDSRT");
             }
             return res;
         }
@@ -1980,8 +1982,8 @@ namespace OnionArchitectureAPI.Services.Travelport
             fareRepriceReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
             fareRepriceReq.Append("<soap:Body>");
 
-            fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\"  AuthorizedBy = \"Travelport\" TargetBranch=\"" + _targetBranch + "\">");//According to demo
-            //fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" FareRuleType=\"long\" AuthorizedBy = \"Travelport\" CheckOBFees=\"All\" TargetBranch=\"" + _targetBranch + "\">");
+            //fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\"  AuthorizedBy = \"Travelport\" TargetBranch=\"" + _targetBranch + "\">");//According to demo
+            fareRepriceReq.Append("<AirPriceReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" FareRuleType=\"long\" AuthorizedBy = \"Travelport\" CheckOBFees=\"All\" TargetBranch=\"" + _targetBranch + "\">");
             fareRepriceReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
             fareRepriceReq.Append("<AirItinerary>");
             //< AirSegment Key = "nX2BdBWDuDKAf9mT8SBAAA==" AvailabilitySource = "P" Equipment = "32A" AvailabilityDisplayType = "Fare Shop/Optimal Shop" Group = "0" Carrier = "AI" FlightNumber = "860" Origin = "DEL" Destination = "BOM" DepartureTime = "2024-07-25T02:15:00.000+05:30" ArrivalTime = "2024-07-25T04:30:00.000+05:30" FlightTime = "135" Distance = "708" ProviderCode = "1G" ClassOfService = "T" />
@@ -2120,8 +2122,8 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
 
             fareRepriceReq.Append("</AirItinerary>");
-            fareRepriceReq.Append("<AirPricingModifiers  InventoryRequestType=\"DirectAccess\">");//According to demo
-            //fareRepriceReq.Append("<AirPricingModifiers ETicketability=\"Yes\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
+            //fareRepriceReq.Append("<AirPricingModifiers  InventoryRequestType=\"DirectAccess\">");//According to demo
+            fareRepriceReq.Append("<AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
             fareRepriceReq.Append("<BrandModifiers>");
             fareRepriceReq.Append("<FareFamilyDisplay ModifierType=\"FareFamily\"/>");
             fareRepriceReq.Append("</BrandModifiers>");
@@ -2586,7 +2588,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             else
             {
-                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(fareRepriceReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAirprice", "SameGDSRT");
+                logs.WriteLogsR("Request: " + fareRepriceReq + "\n\n Response: " + res, "GetAirprice", "SameGDSRT");
             }
             return res;
         }
@@ -3005,6 +3007,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                     {
                         createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\" Age=\"40\" DOB=\"1984-07-25\">");
                     }
+
+
                     //Title
                     if (passengerdetails[i].passengertypecode == "ADT")
                     {
@@ -3091,14 +3095,14 @@ namespace OnionArchitectureAPI.Services.Travelport
 
                     }
 
-                    if (passengerdetails[i].passengertypecode == "CNN")
+                    if (passengerdetails[i].passengertypecode == "CNN" || passengerdetails[i].passengertypecode == "CHD")
                     {
                         createPNRReq.Append("<NameRemark>");
-                        createPNRReq.Append("<RemarkData>P-C04</RemarkData>");
+                        createPNRReq.Append("<RemarkData>P-C10</RemarkData>");
                         createPNRReq.Append("</NameRemark>");
                     }
-                    string format = Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
-                    if (passengerdetails[i].passengertypecode == "INF")
+                    string format = "01NOV23";// Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
+                    if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
                     {
                         createPNRReq.Append("<NameRemark>");
                         createPNRReq.Append("<RemarkData>" + format + "</RemarkData>");
@@ -3118,12 +3122,14 @@ namespace OnionArchitectureAPI.Services.Travelport
                     createPNRReq.Append("</BookingTraveler>");
                     count++;
                 }
+                //createPNRReq.Append("<AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
+                //createPNRReq.Append("</AirPricingModifiers>");
                 createPNRReq.Append("<ContinuityCheckOverride xmlns=\"http://www.travelport.com/schema/common_v52_0\">true</ContinuityCheckOverride>");
                 createPNRReq.Append("<AgencyContactInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\">");
                 createPNRReq.Append("<PhoneNumber CountryCode=\"91\" AreaCode=\"011\" Number=\"46615790\" Location=\"DEL\" Type=\"Agency\"/>");
                 createPNRReq.Append("</AgencyContactInfo>");
                 createPNRReq.Append("<FormOfPayment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"Cash\" Key=\"1\" />");
-                createPNRReq.Append(Getdetails.PriceSolution);
+                createPNRReq.Append(Getdetails.PriceSolution.Replace("</air:CancelPenalty>","</air:CancelPenalty><air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\"> </air:AirPricingModifiers>"));
                 createPNRReq.Append("<ActionStatus xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"ACTIVE\" TicketDate=\"T*\" ProviderCode=\"1G\" />");
                 createPNRReq.Append("<Payment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"2\" Type=\"Itinerary\" FormOfPaymentRef=\"1\" Amount=\"INR" + _Total + "\" />");
                 createPNRReq.Append("</AirCreateReservationReq></soap:Body></soap:Envelope>");
@@ -3138,7 +3144,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             else
             {
-                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(createPNRReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetPNR", "SameGDSRT");
+                logs.WriteLogsR("Request: " + createPNRReq + "\n\n Response: " +res, "GetPNR", "SameGDSRT");
             }
             return res;
         }
@@ -3622,7 +3628,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 retrivePnrReq.Append("<soap:Body>");
                 retrivePnrReq.Append("<UniversalRecordRetrieveReq xmlns=\"http://www.travelport.com/schema/universal_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy=\"Travelport\" TargetBranch=\"" + _targetBranch + "\">");
                 retrivePnrReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"uAPI\" />");
-                retrivePnrReq.Append("<UniversalRecordLocatorCode>" + universalRlcode_ + "</UniversalRecordLocatorCode>");
+                //retrivePnrReq.Append("<UniversalRecordLocatorCode>" + universalRlcode_ + "</UniversalRecordLocatorCode>");
+                retrivePnrReq.Append("<ProviderReservationInfo ProviderLocatorCode=\""+universalRlcode_+"\" ProviderCode=\"1G\"/>");
                 retrivePnrReq.Append("</UniversalRecordRetrieveReq>");
                 retrivePnrReq.Append("</soap:Body>");
                 retrivePnrReq.Append("</soap:Envelope>");
@@ -3668,7 +3675,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             else
             {
-                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(retrivePnrReq) + "\n\n Response: " + JsonConvert.SerializeObject(pnrretriveRes), "RetrivePnr", "SameGDSRT");
+                logs.WriteLogsR("Request: " + retrivePnrReq + "\n\n Response: " + pnrretriveRes, "RetrivePnr", "SameGDSRT");
             }
             return pnrretriveRes;
         }
@@ -3703,7 +3710,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             else
             {
-                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(retriveTicketPnrReq) + "\n\n Response: " + JsonConvert.SerializeObject(pnrticketretriveRes), "RetriveTicketPnr", "SameGDSRT");
+                logs.WriteLogsR("Request: " + retriveTicketPnrReq + "\n\n Response: " + pnrticketretriveRes, "RetriveTicketPnr", "SameGDSRT");
             }
             return pnrticketretriveRes;
         }

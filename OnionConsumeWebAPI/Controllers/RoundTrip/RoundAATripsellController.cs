@@ -994,7 +994,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         //string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
                         #endregion
                     }
-                    if (dataArray[i1].ToLower() == "vistara" || dataArray[i1].ToLower() == "airindia")
+                    if (dataArray[i1].ToLower() == "vistara" || dataArray[i1].ToLower() == "airindia" || dataArray[i1].ToLower() == "srilankan" || dataArray[i1].ToLower() == "qatar")
                     {
                         HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
                     }

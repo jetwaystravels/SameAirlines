@@ -97,8 +97,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
                     {
-                        pax++;
                         sbReq.Append("<com:SearchPassenger Code=\"ADT\" BookingTravelerRef=\"" + pax + "\" />");
+                        pax++;
                     }
                 }
 
@@ -106,8 +106,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
                     {
+                        sbReq.Append("<com:SearchPassenger Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"1\"/>");
                         pax++;
-                        sbReq.Append("<com:SearchPassenger Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"01\"/>");
                     }
                 }
 
@@ -115,8 +115,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
                     {
+                        sbReq.Append("<com:SearchPassenger Code=\"CNN\" BookingTravelerRef=\"" + pax + "\" Age=\"11\"/>");
                         pax++;
-                        sbReq.Append("<com:SearchPassenger Code=\"CNN\" BookingTravelerRef=\"" + pax + "\" Age=\"10\"/>");
                     }
                 }
             }
@@ -126,24 +126,24 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.adultcount; i++)
                     {
-                        pax++;
                         sbReq.Append("<com:SearchPassenger Code=\"ADT\" BookingTravelerRef=\"" + pax + "\" />");
+                        pax++;
                     }
                 }
                 if (_GetfligthModel.infantcount != 0)
                 {
                     for (int i = 0; i < _GetfligthModel.infantcount; i++)
                     {
+                        sbReq.Append("<com:SearchPassenger Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"1\"/>");
                         pax++;
-                        sbReq.Append("<com:SearchPassenger Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"01\"/>");
                     }
                 }
                 if (_GetfligthModel.childcount != 0)
                 {
                     for (int i = 0; i < _GetfligthModel.childcount; i++)
                     {
+                        sbReq.Append("<com:SearchPassenger Code=\"CNN\" BookingTravelerRef=\"" + pax + "\" Age=\"11\"/>");
                         pax++;
-                        sbReq.Append("<com:SearchPassenger Code=\"CNN\" BookingTravelerRef=\"" + pax + "\" Age=\"10\"/>");
                     }
                 }
 
@@ -2134,16 +2134,17 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
                     {
-                        paxCount++;
                         fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" BookingTravelerRef=\"" + paxCount + "\"/>");
+                        paxCount++;
+
                     }
                 }
                 if (_GetfligthModel.passengercount.infantcount != 0)
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
                     {
+                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" BookingTravelerRef=\"" + paxCount + "\" Age=\"1\"/>");
                         paxCount++;
-                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" BookingTravelerRef=\"" + paxCount + "\" Age=\"01\"/>");
                     }
                 }
 
@@ -2151,8 +2152,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
                     {
+                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + paxCount + "\" Age=\"11\"/>");
                         paxCount++;
-                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + paxCount + "\" Age=\"10\"/>");
                     }
                 }
                 
@@ -2164,8 +2165,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.adultcount; i++)
                     {
-                        paxCount++;
                         fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\"  BookingTravelerRef=\"" + paxCount + "\" Code=\"ADT\" />");
+                        paxCount++;
                     }
                 }
 
@@ -2173,8 +2174,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.infantcount; i++)
                     {
+                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"1\"/>");
                         paxCount++;
-                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"01\"/>");
                     }
                 }
 
@@ -2183,8 +2184,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.childcount; i++)
                     {
+                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"CNN\" Age=\"11\"/>");
                         paxCount++;
-                        fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"CNN\" Age=\"10\"/>");
                     }
                 }
                 
@@ -2576,6 +2577,15 @@ namespace OnionArchitectureAPI.Services.Travelport
             //fareRepriceReq.Append("</AirPriceReq></soap:Body></soap:Envelope>");
             #endregion
 
+            //For certification Request
+            //string resp = string.Empty;
+            //string path = "D:\\pcheck.txt";
+            //using (StreamReader reader = new StreamReader(path))
+            //{
+            //    resp = reader.ReadToEnd(); // Reads the entire file content into a string
+            //}
+            //fareRepriceReq = new StringBuilder();
+            //fareRepriceReq.Append(resp);
 
             string res = Methodshit.HttpPost(_testURL, fareRepriceReq.ToString(), _userName, _password);
             SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
@@ -2993,19 +3003,19 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     if (passengerdetails[i].passengertypecode == "ADT")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\" Age=\"40\" DOB=\"1984-07-25\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\">");
                     }
                     else if (passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"CNN\" Age=\"10\" DOB=\"2014-07-25\" >");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"CNN\">");
                     }
                     else if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\" TravelerType=\"INF\" Age=\"1\" DOB=\"2023-08-25\" >");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\" TravelerType=\"INF\">");
                     }
                     else
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\" Age=\"40\" DOB=\"1984-07-25\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\">");
                     }
 
 
@@ -3059,20 +3069,11 @@ namespace OnionArchitectureAPI.Services.Travelport
                     //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
                     //    }
                     //}
-                    createPNRReq.Append("<SSR  Key=\"" + count + "\" Type=\"DOCS\"  FreeText=\"P/GB/S12345678/GB/20JUL76/M/01JAN16/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                    string contractNo = string.Empty;
-                    if (string.IsNullOrEmpty(contractNo))
-                    {
-                        contractNo = "CTCM " + passengerdetails[i].mobile + " PAX";
-                    }
-
-
                     if (i == 0 && passengerdetails[i].passengertypecode == "ADT")
                     {
-                        icount++;
-                        createPNRReq.Append("<SSR  Key=\"" + icount + "\" Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
-                        icount++;
-                        createPNRReq.Append("<SSR  Key=\"" + icount + "\" Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec06/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
 
                         //Domestic
                         //createPNRReq.Append("<Address>");
@@ -3087,23 +3088,31 @@ namespace OnionArchitectureAPI.Services.Travelport
                         createPNRReq.Append("<Address>");
                         createPNRReq.Append("<AddressName>DemoSiteAddress</AddressName>");
                         createPNRReq.Append("<Street>Via Augusta 59 5</Street>");
-                        createPNRReq.Append("<City>Madrid</City>");
-                        createPNRReq.Append("<State>IA</State>");
-                        createPNRReq.Append("<PostalCode>50156</PostalCode>");
-                        createPNRReq.Append("<Country>US</Country>");
+                        createPNRReq.Append("<City>Delhi</City>");
+                        createPNRReq.Append("<State>DL</State>");
+                        createPNRReq.Append("<PostalCode>111001</PostalCode>");
+                        createPNRReq.Append("<Country>IN</Country>");
                         createPNRReq.Append("</Address>");
 
                     }
 
                     if (passengerdetails[i].passengertypecode == "CNN" || passengerdetails[i].passengertypecode == "CHD")
                     {
+                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/06Dec13/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+
                         createPNRReq.Append("<NameRemark>");
-                        createPNRReq.Append("<RemarkData>P-C10</RemarkData>");
+                        createPNRReq.Append("<RemarkData>P-C11 DOB06Dec13</RemarkData>");
                         createPNRReq.Append("</NameRemark>");
                     }
-                    string format = "01NOV23";// Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
+                    string format = "06NOV23";// Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
                     if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
                     {
+                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/06NOV23/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+
                         createPNRReq.Append("<NameRemark>");
                         createPNRReq.Append("<RemarkData>" + format + "</RemarkData>");
                         createPNRReq.Append("</NameRemark>");

@@ -42,21 +42,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         DateTime Journeydatetime = new DateTime();
         string bookingKey = string.Empty;
         ApiResponseModel responseModel;
-        //double totalAmount = 0;
-        //double totalAmountBaggage = 0;
-        //double totalAmounttax = 0;
-        //double totalAmounttaxSGST = 0;
-        //double totalAmounttaxBag = 0;
-        //double totalAmounttaxSGSTBag = 0;
 
 
-        //double totalMealTax = 0;
-        //double totalBaggageTax = 0;
-        //double taxMinusMeal = 0;
-        //double taxMinusBaggage = 0;
-        //double TotalAmountMeal = 0;
-        //double TotaAmountBaggage = 0;
-        public async Task<IActionResult> RoundTripBookingView()
+		public async Task<IActionResult> RoundTripBookingView()
         {
 
 
@@ -1241,10 +1229,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     // Spice Jet
                     else if (flagSpicejet == true && data.Airline[k1].ToLower().Contains("spicejet"))
                     {
-                        //flagSpicejet = false;
-                        #region Spicejet Commit
-                        //Spicejet
-                        token = string.Empty;
+						#region Spicejet Payment And Commit
+						token = string.Empty;
                         if (k1 == 0)
                         {
                             tokenview = HttpContext.Session.GetString("SpicejetSignature");
@@ -1253,19 +1239,23 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             tokenview = HttpContext.Session.GetString("SpicejetSignatureR");
                         }
-
-                        if (!string.IsNullOrEmpty(tokenview))
+						
+						if (!string.IsNullOrEmpty(tokenview))
                         {
-                            _commit objcommit = new _commit();
-                            #region GetState
-                            GetBookingFromStateResponse _GetBookingFromStateRS1 = null;
+
+							
+							if (tokenview == null) { tokenview = ""; }
+							token = tokenview.Replace(@"""", string.Empty);
+							_commit objcommit = new _commit();
+							SpiceJetApiController objSpiceJet = new SpiceJetApiController();
+
+							//GetBookingFromState
+							#region GetState
+							GetBookingFromStateResponse _GetBookingFromStateRS1 = null;
                             GetBookingFromStateRequest _GetBookingFromStateRQ1 = null;
                             _GetBookingFromStateRQ1 = new GetBookingFromStateRequest();
-                            _GetBookingFromStateRQ1.Signature = tokenview;
+                            _GetBookingFromStateRQ1.Signature = token;
                             _GetBookingFromStateRQ1.ContractVersion = 420;
-
-
-                            SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                             _GetBookingFromStateRS1 = await objSpiceJet.GetBookingFromState(_GetBookingFromStateRQ1);
 
                             string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
@@ -1274,12 +1264,42 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 Totalpayment = _GetBookingFromStateRS1.BookingData.BookingSum.TotalCost;
                             }
-                            #endregion
-                            #region Addpayment For Api payment deduction
-                            //IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
 
-                            #endregion
-                            if (tokenview == null) { tokenview = ""; }
+							//ADD Payment
+							AddPaymentToBookingRequest _bookingpaymentRequest = new AddPaymentToBookingRequest();
+							AddPaymentToBookingResponse _BookingPaymentResponse = new AddPaymentToBookingResponse();
+							_bookingpaymentRequest.Signature = token;
+							_bookingpaymentRequest.ContractVersion = 420;
+							_bookingpaymentRequest.addPaymentToBookingReqData = new AddPaymentToBookingRequestData();
+							_bookingpaymentRequest.addPaymentToBookingReqData.MessageStateSpecified = true;
+							_bookingpaymentRequest.addPaymentToBookingReqData.MessageState = MessageState.New;
+							_bookingpaymentRequest.addPaymentToBookingReqData.WaiveFeeSpecified = true;
+							_bookingpaymentRequest.addPaymentToBookingReqData.WaiveFee = false;
+							_bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodTypeSpecified = true;
+							_bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodType = RequestPaymentMethodType.AgencyAccount;
+							_bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodCode = "AG";
+							_bookingpaymentRequest.addPaymentToBookingReqData.QuotedCurrencyCode = "INR";
+							_bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmountSpecified = true;
+							_bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmount = Totalpayment;
+							//_bookingpaymentRequest.addPaymentToBookingReqData.AccountNumber = "OTI122";
+							_bookingpaymentRequest.addPaymentToBookingReqData.InstallmentsSpecified = true;
+							_bookingpaymentRequest.addPaymentToBookingReqData.Installments = 1;
+							_bookingpaymentRequest.addPaymentToBookingReqData.ExpirationSpecified = true;
+							_bookingpaymentRequest.addPaymentToBookingReqData.Expiration = Convert.ToDateTime("0001-01-01T00:00:00");
+
+							_BookingPaymentResponse = await objSpiceJet.Addpayment(_bookingpaymentRequest);
+
+							string payment = JsonConvert.SerializeObject(_BookingPaymentResponse);
+							logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingpaymentRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingPaymentResponse), "BookingPayment", "SpiceJetRT");
+
+
+
+							#endregion
+							#region Addpayment For Api payment deduction
+							//IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
+
+							#endregion
+							if (tokenview == null) { tokenview = ""; }
                             token = tokenview.Replace(@"""", string.Empty);
                             string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
                             List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
@@ -1307,7 +1327,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].LastName = passeengerlist[0].last;
                                 _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].Title = passeengerlist[0].title;
                                 _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].EmailAddress = contactList.updateContactsRequestData.BookingContactList[0].EmailAddress; //"vinay.ks@gmail.com"; //passeengerlist.Email;
-                                _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].HomePhone = "9457000000"; //contactList.updateContactsRequestData.BookingContactList[0].HomePhone; //"9457000000"; //passeengerlist.mobile;
+                                _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].HomePhone = "+919457000000"; //contactList.updateContactsRequestData.BookingContactList[0].HomePhone; //"9457000000"; //passeengerlist.mobile;
                                 _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine1 = "A";
                                 _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine2 = "B";
                                 _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].City = "Delhi";

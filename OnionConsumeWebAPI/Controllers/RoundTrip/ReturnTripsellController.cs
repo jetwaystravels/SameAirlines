@@ -26,6 +26,7 @@ using OnionArchitectureAPI.Services.Travelport;
 using Microsoft.IdentityModel.Tokens;
 using static DomainLayer.Model.GDSResModel;
 using IndigoBookingManager_;
+using System.IO;
 namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
     public class ReturnTripsellController : Controller

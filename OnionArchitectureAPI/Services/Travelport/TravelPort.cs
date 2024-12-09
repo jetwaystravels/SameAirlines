@@ -6,6 +6,7 @@ using ServiceLayer.Service.Interface;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Text;
+using System.Text.RegularExpressions;
 using Utility;
 using ZXing.QrCode.Internal;
 using static DomainLayer.Model.GDSResModel;
@@ -2578,11 +2579,17 @@ namespace OnionArchitectureAPI.Services.Travelport
             #endregion
 
             //For certification Request
+            //1) change the traceid i.e same as LowFare
+            //2) airsegment from lowfareresponse
+            //3) providercode="1G"
+            //4) check segmentif and farebasiscode
+            //5) Traceid will be same in all request further
+
             //string resp = string.Empty;
             //string path = "D:\\pcheck.txt";
             //using (StreamReader reader = new StreamReader(path))
             //{
-            //    resp = reader.ReadToEnd(); // Reads the entire file content into a string
+                //resp = reader.ReadToEnd(); // Reads the entire file content into a string
             //}
             //fareRepriceReq = new StringBuilder();
             //fareRepriceReq.Append(resp);
@@ -3098,18 +3105,18 @@ namespace OnionArchitectureAPI.Services.Travelport
 
                     if (passengerdetails[i].passengertypecode == "CNN" || passengerdetails[i].passengertypecode == "CHD")
                     {
-                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/06Dec13/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/09Dec13/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
                         createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
                         createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
 
                         createPNRReq.Append("<NameRemark>");
-                        createPNRReq.Append("<RemarkData>P-C11 DOB06Dec13</RemarkData>");
+                        createPNRReq.Append("<RemarkData>P-C11 DOB09Dec13</RemarkData>");
                         createPNRReq.Append("</NameRemark>");
                     }
-                    string format = "06NOV23";// Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
+                    string format = "09DEC23";// Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
                     if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
                     {
-                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/06NOV23/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                        createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/09DEC23/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
                         createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
                         createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
 
@@ -3138,7 +3145,16 @@ namespace OnionArchitectureAPI.Services.Travelport
                 createPNRReq.Append("<PhoneNumber CountryCode=\"91\" AreaCode=\"011\" Number=\"46615790\" Location=\"DEL\" Type=\"Agency\"/>");
                 createPNRReq.Append("</AgencyContactInfo>");
                 createPNRReq.Append("<FormOfPayment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"Cash\" Key=\"1\" />");
-                createPNRReq.Append(Getdetails.PriceSolution.Replace("</air:CancelPenalty>","</air:CancelPenalty><air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\"> </air:AirPricingModifiers>"));
+                //createPNRReq.Append(Getdetails.PriceSolution.Replace("</air:CancelPenalty>","</air:CancelPenalty><air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\"> </air:AirPricingModifiers>"));
+                Getdetails.PriceSolution = Getdetails.PriceSolution.Replace("</air:CancelPenalty>", "</air:CancelPenalty><air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\"> </air:AirPricingModifiers>");
+
+                // Define the regex pattern to match any BookingTravelerRef value dynamically
+                string pattern = @"<air:PassengerType BookingTravelerRef='(\d+)' Code='INF' Age='(\d+)'/>";
+                // Define the replacement string (maintaining the BookingTravelerRef dynamically)
+                string replacement = @"<air:PassengerType BookingTravelerRef='$1' Code='INF' PricePTCOnly=""true"" Age='$1'/>";
+                // Perform the replacement
+                Getdetails.PriceSolution=Regex.Replace(Getdetails.PriceSolution, pattern, replacement);
+                createPNRReq.Append(Getdetails.PriceSolution);
                 createPNRReq.Append("<ActionStatus xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"ACTIVE\" TicketDate=\"T*\" ProviderCode=\"1G\" />");
                 createPNRReq.Append("<Payment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"2\" Type=\"Itinerary\" FormOfPaymentRef=\"1\" Amount=\"INR" + _Total + "\" />");
                 createPNRReq.Append("</AirCreateReservationReq></soap:Body></soap:Envelope>");

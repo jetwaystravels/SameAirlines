@@ -2767,6 +2767,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 Journeykeyairasia = Journeykeyairasia.Substring(0, index);
                             }
                             _JourneykeyDataAA = Journeykeyairasia.Replace(@"""", string.Empty);
+                            var blankRequest = new { };
+                            var jsonSeatmapRequest = JsonConvert.SerializeObject(blankRequest, Formatting.Indented);//Request for Certification
+                            logs.WriteLogsR(jsonSeatmapRequest, "11-GetSeatmapReq_" + (i + 1), "SameAirAsiaRT");
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                             HttpResponseMessage responseSeatmap = await client.GetAsync(BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + Journeykeyairasia + "?IncludePropertyLookup=true");
@@ -2777,7 +2780,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 string columncount0 = string.Empty;
                                 var _responseSeatmap = responseSeatmap.Content.ReadAsStringAsync().Result;
-                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + _responseSeatmap, "11-GetSeatmapRes_" + (i + 1), "SameAirAsiaRT");
+                                logs.WriteLogsR(_responseSeatmap, "11-GetSeatmapRes_" + (i + 1), "SameAirAsiaRT");
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + _responseSeatmap, "11-GetSeatmapRes_" + (i + 1), "SameAirAsiaRT");
 
                                 var JsonObjSeatmap = JsonConvert.DeserializeObject<dynamic>(_responseSeatmap);
                                 //var uniquekey1 = JsonObjSeatmap.data[0].seatMap.decks["1"].compartments.Y.units[0].unitKey;

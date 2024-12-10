@@ -259,8 +259,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     using (HttpClient client = new HttpClient())
                     {
                         ContactModel _ContactModel = new ContactModel();
+                        _ContactModel.contactTypeCode = "P";
+
                         //  _ContactModel.emailAddress = passengerdetails.Email;
-                        _ContactModel.emailAddress = contactobject.emailAddress;
+                       
                         _Phonenumber Phonenumber = new _Phonenumber();
                         List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                         Phonenumber.type = "Home";
@@ -275,20 +277,24 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             _ContactModel.phoneNumbers = Phonenumberlist;
                         }
-                        _ContactModel.contactTypeCode = "P";
+                        
 
                         _Address Address = new _Address();
                         Address.lineOne = "123 Main Street";
+                        Address.lineTwo = "barahkhamba";
                         Address.countryCode = "IN";
                         Address.provinceState = "TN";
-                        Address.city = "Chennai";
-                        Address.postalCode = "600028";
+                        Address.city = "Delhi";
+                        Address.postalCode = "110011";
                         _ContactModel.address = Address;
-
+                        _ContactModel.emailAddress = contactobject.emailAddress;
+                        _ContactModel.sourceOrganization = "OTAIN";
+                        _ContactModel.companyName = "JETWAYS TRAVELS PRIVATE LIMITED";
+                        _ContactModel.distributionOption = "";
                         _Name Name = new _Name();
-                        Name.first = "Vadivel";
-                        Name.middle = "raja";
-                        Name.last = "VR";
+                        Name.first = "ASHOK";
+                        Name.middle =null;
+                        Name.last = "KUSHWAHA";
                         Name.title = "MR";
                         _ContactModel.name = Name;
                         Logs logs1 = new Logs();
@@ -576,7 +582,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         Name.first = contactobject.first;
                         Name.last = contactobject.last;
                         Name.title = "MR";
-                        Name.suffix = "";
+                        Name.suffix = null;
                         addinformation.Name = Name;
                         if (contactobject.companyName != null)
                         {
@@ -660,7 +666,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 _Info Info = new _Info();
                                 if (passengerdetails[i].title == "Mr")
                                 {
-                                    Info.gender = "MALE";
+                                    Info.gender = "Male";
                                 }
                                 else
                                 {
@@ -670,7 +676,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 name.title = passengerdetails[i].title;
                                 name.first = passengerdetails[i].first;
                                 name.last = passengerdetails[i].last;
-                                name.middle = "";
+                                name.middle = null;
                                 Info.dateOfBirth = "";
                                 Info.nationality = "IN";
                                 Info.residentCountry = "IN";
@@ -724,10 +730,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                     InfantName nameINF = new InfantName();
                                     nameINF.first = passengerdetails[j].first;
-                                    nameINF.middle = "";
+                                    nameINF.middle = null;
                                     nameINF.last = passengerdetails[j].last;
-                                    nameINF.title = "Mr";
-                                    nameINF.suffix = "";
+                                    nameINF.title = null;
+                                    nameINF.suffix = null;
                                     _PassengersModel1.name = nameINF;
 
                                     Logs logs = new Logs();
@@ -735,7 +741,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     logs.WriteLogsR(jsonPassengers, "7-AddInfantReq_"+(k+1), "SameAirAsiaRT");
                                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                                    
                                     HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + result + "/infant", _PassengersModel1);
+                                
                                     if (responsePassengers.IsSuccessStatusCode)
                                     {
                                         var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
@@ -2069,11 +2077,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     {
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
-                                                        _sellSSRModel.note = "DevTest";
+                                                        _sellSSRModel.note = "mealssr";
                                                         _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
-                                                        logs1.WriteLogsR(jsonSellSSR, "10-SellMeal_Req", "SameAirAsiaRT");
+                                                        logs1.WriteLogsR(jsonSellSSR, "10-SellMeal_Req_"+ (l1+1), "SameAirAsiaRT");
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                         HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey, _sellSSRModel);
@@ -2081,8 +2089,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         {
 
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                           // logs1.WriteLogsR(_responseresponseSellSSR, "10-SellMeal_Res", "SameAirAsiaRT");
-                                                             logs1.WriteLogsR("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + _responseresponseSellSSR, "10-SellMeal_Res", "SameAirAsiaRT");
+                                                            logs1.WriteLogsR(_responseresponseSellSSR, "10-SellMeal_Res_"+ (l1+1), "SameAirAsiaRT");
+                                                             //logs1.WriteLogsR("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + _responseresponseSellSSR, "10-SellMeal_Res", "SameAirAsiaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2104,19 +2112,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     {
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
-                                                        _sellSSRModel.note = "DevTest";
+                                                        _sellSSRModel.note = "mealssr";
                                                         _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
-                                                        logs1.WriteLogsR(jsonSellSSR, "10-SellMealRound_Req", "SameAirAsiaRT");
+                                                        logs1.WriteLogsR(jsonSellSSR, "10-SellMealRound_Req_"+ (l1+1), "SameAirAsiaRT");
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                         HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey, _sellSSRModel);
                                                         if (responseSellSSR.IsSuccessStatusCode)
                                                         {
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + _responseresponseSellSSR, "10-SellMealRound_Res", "SameAirAsiaRT");
-                                                            //logs1.WriteLogsR(_responseresponseSellSSR, "10-SellMealRound_Res", "SameAirAsiaRT");
+                                                            logs1.WriteLogsR(_responseresponseSellSSR, "10-SellMealRound_Res_"+ (l1+1), "SameAirAsiaRT");
+                                                           // logs1.WriteLogsR("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + _responseresponseSellSSR, "10-SellMealRound_Res", "SameAirAsiaRT");
+                                                           
                                                             // logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_sellSSRModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + mealskey + "\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "10-SellmealReturn", "SameAirAsiaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
@@ -2157,11 +2166,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     {
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
-                                                        _sellSSRModel.note = "DevTest";
+                                                        _sellSSRModel.note = "bagssr";
                                                         _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
-                                                        logs1.WriteLogsR(jsonSellSSR, "9-SellBaggage_Req", "SameAirAsiaRT");
+                                                        logs1.WriteLogsR(jsonSellSSR, "9-SellBaggage_Req_"+(b+1), "SameAirAsiaRT");
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                         HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + bagskey, _sellSSRModel);
@@ -2169,7 +2178,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         {
 
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + bagskey + "\n Response: " + _responseresponseSellSSR, "9-SellBaggage", "SameAirAsiaRT");
+                                                            logs1.WriteLogsR(_responseresponseSellSSR, "9-SellBaggage_Res_"+(b+1), "SameAirAsiaRT");
+                                                            //logs1.WriteLogsR("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + bagskey + "\n Response: " + _responseresponseSellSSR, "9-SellBaggage", "SameAirAsiaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2191,18 +2201,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     {
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
-                                                        _sellSSRModel.note = "DevTest";
+                                                        _sellSSRModel.note = "bagssr";
                                                         _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
-                                                        logs1.WriteLogsR(jsonSellSSR, "9-SellBaggageRound_Req", "SameAirAsiaRT");
+                                                        logs1.WriteLogsR(jsonSellSSR, "9-SellBaggageRound_Req_"+(b+1), "SameAirAsiaRT");
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                         HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + bagskeyCon, _sellSSRModel);
                                                         if (responseSellSSR.IsSuccessStatusCode)
                                                         {
                                                             var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                                            logs1.WriteLogsR("Url:" + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + bagskeyCon + "\n Response: " + _responseresponseSellSSR, "9-SellBaggageRound_Res", "SameAirAsiaRT");
+                                                            logs1.WriteLogsR( _responseresponseSellSSR, "9-SellBaggageRound_Res"+(b+1), "SameAirAsiaRT");
+                                                            //logs1.WriteLogsR("Url:" + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + bagskeyCon + "\n Response: " + _responseresponseSellSSR, "9-SellBaggageRound_Res", "SameAirAsiaRT");
                                                             var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                                         }
 
@@ -2704,14 +2715,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
+                                                logs1.WriteLogsR( jsonSeatAssignmentRequest, "12-AssignSeatReq", "SameAirAsiaRT");
                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                 HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    logs1.WriteLogsR("Request: " + _SeatAssignmentModel + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + _responseSeatAssignment, "12-AssignSeatRes", "SameAirAsiaRT");
-                                                    var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
+                                                    logs1.WriteLogsR(_responseSeatAssignment, "12-AssignSeatRes", "SameAirAsiaRT");
+                                                //logs1.WriteLogsR("Request: " + _SeatAssignmentModel + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + _responseSeatAssignment, "12-AssignSeatRes", "SameAirAsiaRT");
+                                                var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
                                             }
@@ -2730,14 +2743,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
-                                                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                                logs1.WriteLogsR(jsonSeatAssignmentRequest, "12-AssignSeatReq", "SameAirAsiaRT");
+                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                 HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "12-AssignSeatRound_Res", "SameAirAsiaRT");
-                                                    var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
+                                                    logs1.WriteLogsR(_responseSeatAssignment, "12-AssignSeatRound_Res", "SameAirAsiaRT");
+                                                //logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "12-AssignSeatRound_Res", "SameAirAsiaRT");
+                                                var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
                                             }
@@ -2756,13 +2771,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
+                                                logs1.WriteLogsR(jsonSeatAssignmentRequest , "12-AssignSeatRound_Req", "SameAirAsiaRT");
                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                 HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "11-AssignSeatRound", "SameAirAsiaRT");
+                                                    logs1.WriteLogsR(_responseSeatAssignment, "12-AssignSeatRound_Res", "SameAirAsiaRT");
+                                                  //logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "11-AssignSeatRound", "SameAirAsiaRT");
                                                     var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
@@ -2781,14 +2798,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 SeatAssignmentModel _SeatAssignmentModel = new SeatAssignmentModel();
                                                 _SeatAssignmentModel.journeyKey = journeyKey;
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
-                                                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                                logs1.WriteLogsR(jsonSeatAssignmentRequest, "12-AssignSeatRound_Req", "SameAirAsiaRT");
+                                               client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                                                 HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                                    logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "11-AssignSeatRoundConnected", "SameAirAsiaRT");
-                                                    var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
+                                                     logs1.WriteLogsR(_responseSeatAssignment, "12-AssignSeatRound_res", "SameAirAsiaRT");
+                                                // logs1.WriteLogsR("Request: " + JsonConvert.SerializeObject(_SeatAssignmentModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey + "\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "11-AssignSeatRoundConnected", "SameAirAsiaRT");
+                                                var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                                 }
 
                                             }
@@ -3239,6 +3258,28 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             //}
             //}
 
+            #endregion
+
+            #region GetBooking BalanceDue
+            using (HttpClient client = new HttpClient())
+            {
+                var blankRequest = new { };
+                var GetbookingPnrRequest = JsonConvert.SerializeObject(blankRequest, Formatting.Indented);//Request for Certification
+                logs1.WriteLogs(GetbookingPnrRequest, "13-GetBookingBalanceDueReq", "SameAirAsiaRT");
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage GetBookingBalanceDue = await client.GetAsync(AppUrlConstant.AirasiaGetBoking);
+                if (GetBookingBalanceDue.IsSuccessStatusCode)
+                {
+                    // string BaseURL1 = "http://localhost:5225/";
+                    var _responceGetBooking = GetBookingBalanceDue.Content.ReadAsStringAsync().Result;
+                    logs1.WriteLogs(_responceGetBooking, "13-GetBookingBalanceDueRes", "SameAirAsiaRT");
+                    //logs1.WriteLogs("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay");
+
+                    var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+
+                }
+            }
             #endregion
 
             return RedirectToAction("RoundTripPaymentView", "RoundTripPaymentGateway");

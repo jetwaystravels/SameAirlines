@@ -101,19 +101,25 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _Commit_BookingModel.notifyContacts = true;
                         _Commit_BookingModel.contactTypesToNotify = NotifyContacts;
                         var jsonCommitBookingRequest = JsonConvert.SerializeObject(_Commit_BookingModel, Formatting.Indented);
-                          client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        logs.WriteLogsR(jsonCommitBookingRequest,"15-Commit_Booking_Req", "SameAirAsiaRT");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         HttpResponseMessage responceCommit_Booking = await client.PostAsJsonAsync(AppUrlConstant.AirasiaCommitBooking, _Commit_BookingModel);
                         if (responceCommit_Booking.IsSuccessStatusCode)
                         {
                             var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AirasiaCommitBooking + "\n Response: " + _responceCommit_Booking, "13-Commit_Booking", "SameAirAsiaRT");
+                            logs.WriteLogsR( _responceCommit_Booking, "15-Commit_Booking_Res", "SameAirAsiaRT");
+                            // logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AirasiaCommitBooking + "\n Response: " + _responceCommit_Booking, "13-Commit_Booking", "SameAirAsiaRT");
 
                             var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
                         }
                         #endregion
 
                         #region Booking GET
+
+                        var blankRequest = new { };
+                        var GetbookingPnrRequest = JsonConvert.SerializeObject(blankRequest, Formatting.Indented);//Request for Certification
+                        logs.WriteLogsR(GetbookingPnrRequest, "16-GetBookingPNR_Req", "SameAirAsiaRT");
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         HttpResponseMessage responceGetBooking = await client.GetAsync(AppUrlConstant.AirasiaGetBoking);
@@ -134,7 +140,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             //double TotalAmountMeal = 0;
                             //double TotaAmountBaggage = 0;
                             var _responcePNRBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + _responcePNRBooking, "14-GetBookingPNR", "SameAirAsiaRT");
+                            logs.WriteLogsR( _responcePNRBooking, "16-GetBookingPNR_Res", "SameAirAsiaRT");
+                            //logs.WriteLogsR("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + _responcePNRBooking, "14-GetBookingPNR", "SameAirAsiaRT");
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");

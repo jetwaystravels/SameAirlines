@@ -44,6 +44,8 @@ namespace DomainLayer.Model
     public class _Address
     {
         public string lineOne { get; set; }
+        public string lineTwo { get; set; }
+       
         public string countryCode { get; set; }
         public string provinceState { get; set; }
         public string city { get; set; }
